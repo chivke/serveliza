@@ -1,0 +1,178 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, chivke
+# This file is distributed under the same license as the serveliza package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: serveliza 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-27 10:36-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../modules.rst:3
+msgid "Mixins"
+msgstr ""
+
+#: of serveliza.mixins.pdf:2
+msgid "PDF Mixins"
+msgstr ""
+
+#: of serveliza.mixins.pdf:4
+msgid "This module contains the mixins associated with the handling of PDF files."
+msgstr ""
+
+#: of serveliza.mixins.pdf.DirFilePDFMixin:1
+msgid ""
+"Mixin that allows an instance to organize the processing     of PDF "
+"files. This is done in the constructor using the     "
+":meth:`pathfile_to_sheets <.DirFilePDFMixin.pathfile_to_sheets>`     and "
+":meth:`path_to_sheets <.DirFilePDFMixin.path_to_sheets>` methods     by "
+"storing the results in the :attr:`sheets <.DirFilePDFMixin.sheets>`     "
+"property."
+msgstr ""
+
+#: of serveliza.mixins.pdf.DirFilePDFMixin:3
+msgid ""
+"The path to consider is indicated through the \"source\"     argument "
+"defined in the constructor. If the path is a PDF     file it will be "
+"processed, however if it is a directory     it will be recursively "
+"traversed processing all the PDF     files it finds."
+msgstr ""
+
+#: of serveliza.mixins.pdf.DirFilePDFMixin:5
+msgid ""
+"In addition, it defines the :attr:`metadata <.DirFilePDFMixin.metadata>`"
+"     property to store information related to the processed files and the"
+"     :attr:`verbose <.DirFilePDFMixin.verbose>` property that determines"
+"     if the process and results is printed on the screen. The latter is"
+"     definable through the constructor as a \"verbose\" argument and only"
+"     supports boolean value."
+msgstr ""
+
+#: of serveliza.mixins.pdf.DirFilePDFMixin:7
+msgid "It is a subclass of :class:`ProcessorPDFMixin <.ProcessorPDFMixin>`."
+msgstr ""
+
+#: of serveliza.mixins.pdf.DirFilePDFMixin.metadata:1
+msgid ""
+"Property that stores in a dictionary the metadata of the         "
+"processed documents ('files' key), the library used to process         it"
+" ('processor' key) and the initialization times ('ini' key)."
+msgstr ""
+
+#: of serveliza.mixins.pdf.DirFilePDFMixin.path_to_sheets:1
+msgid ""
+"Method receives a path that it searches for PDF files to apply method"
+"         :meth:`pathfile_to_sheets <.DirFilePDFMixin.pathfile_to_sheets>`"
+" to each one.         The result is returned in a single list of sheets."
+msgstr ""
+
+#: of serveliza.mixins.pdf.DirFilePDFMixin.path_to_sheets:3
+msgid ""
+"It applies recursion to go deeper into the directories using the 'depth' "
+"and         'max_depth' parameters. The 'depth' parameter indicates the "
+"depth in relation         to the first call, it also implements "
+"indentation on screen printing. The 'max_depth'         parameter "
+"determines the maximum depth in which to search for PDF files."
+msgstr ""
+
+#: of serveliza.mixins.pdf.DirFilePDFMixin.path_to_sheets:5
+#: serveliza.mixins.pdf.DirFilePDFMixin.pathfile_to_sheets:10
+msgid ""
+"Its manual use is not recommended but it is feasible, the method         "
+"is intended to be activated from the constructor."
+msgstr ""
+
+#: of serveliza.mixins.pdf.DirFilePDFMixin.pathfile_to_sheets:1
+msgid ""
+"Method takes a valid path for a PDF file, uses a PDF processor,         "
+"and then returns a list with the sheets in text string."
+msgstr ""
+
+#: of serveliza.mixins.pdf.DirFilePDFMixin.pathfile_to_sheets:3
+msgid ""
+"If a object is configured as verbose, that is to say property  "
+":attr:`verbose <.DirFilePDFMixin.verbose>` is true,         it will print"
+" on the screen the process and details of the         extraction result. "
+"By default it will not print anything on screen."
+msgstr ""
+
+#: of serveliza.mixins.pdf.DirFilePDFMixin.pathfile_to_sheets:6
+msgid ""
+"This method internally records metadata from file processing in         "
+"the :attr:`metadata <.DirFilePDFMixin.metadata>` property with         "
+"the \"files\" key."
+msgstr ""
+
+#: of serveliza.mixins.pdf.DirFilePDFMixin.pathfile_to_sheets:8
+msgid ""
+"The 'depth' argument is for the indentation of the screen print         "
+"in case it is in verbose mode."
+msgstr ""
+
+#: of serveliza.mixins.pdf.DirFilePDFMixin.sheets:1
+msgid ""
+"Property to store the list of sheets or pages in text         chain of "
+"the processed PDF files."
+msgstr ""
+
+#: of serveliza.mixins.pdf.DirFilePDFMixin.verbose:1
+msgid ""
+"Property that defines whether the instance prints its         progress or"
+" results on the screen. This property is only         definable in the "
+"constructor of the class in the \"verbose\"         argument with a "
+"boolean value."
+msgstr ""
+
+#: of serveliza.mixins.pdf.ProcessorPDFMixin:1
+msgid ""
+"Mixin that allows an instance the ability to process     PDF files with "
+"certain libraries. In the constructor,     the processor to be used is "
+"defined with the argument     of the same name, binding the "
+":attr:`process_pdf     <.ProcesosrPDFMixin.process_pdf>` property to the"
+"     method related to it."
+msgstr ""
+
+#: of serveliza.mixins.pdf.ProcessorPDFMixin:3
+msgid "PDF processor availables:"
+msgstr ""
+
+#: of serveliza.mixins.pdf.ProcessorPDFMixin:5
+msgid ""
+"`pdftotext <https://github.com/jalan/pdftotext>`_         (0.1.0 release)"
+" with :meth:`pdftotext_processor         "
+"<.ProcessorPDFMixin.processor_pdftotext>`"
+msgstr ""
+
+#: of serveliza.mixins.pdf.ProcessorPDFMixin.process_pdf:1
+msgid ""
+"Property that calls the method corresponding to the PDF file         "
+"processor configured in the instance initialization."
+msgstr ""
+
+#: of serveliza.mixins.pdf.ProcessorPDFMixin.processor_name:1
+msgid ""
+"Property containing the name of the PDF processor used         in the "
+"instance."
+msgstr ""
+
+#: of serveliza.mixins.pdf.ProcessorPDFMixin.processor_pdftotext:1
+msgid ""
+"Method to use `pdftotext <https://github.com/jalan/pdftotext>`_         "
+"in a file specified in the argument as a path."
+msgstr ""
+
+#~ msgid "Modules"
+#~ msgstr ""
+
+#~ msgid "Method to take sheetlist of pdf available in directory"
+#~ msgstr ""
+
