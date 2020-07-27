@@ -55,7 +55,7 @@ class ProcessorPDFMixin:
         Property containing the name of the PDF processor used \
         in the instance.
 
-        >>> obj.processor_module
+        >>> obj.processor_name
         str # with the name of processor
         '''
         return self._processor_name
@@ -65,7 +65,7 @@ class ProcessorPDFMixin:
         Method to use `pdftotext <https://github.com/jalan/pdftotext>`_ \
         in a file specified in the argument as a path.
         
-        >>> obj.pdftotext_processor('/path/to/file.pdf')
+        >>> obj.processor_pdftotext('/path/to/file.pdf')
         list # with strings
         '''
         with open(pathfile, "rb") as f:
