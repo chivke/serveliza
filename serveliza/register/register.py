@@ -1,7 +1,7 @@
 import os
 from datetime import datetime, timedelta
 from tqdm import tqdm
-from ..mixins import DirFilePDFMixin
+from ..mixins.pdf import DirFilePDFMixin
 from ..utils import colors
 from .parsers import SheetRegisterParser
 
