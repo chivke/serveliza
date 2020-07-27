@@ -8,7 +8,7 @@ Welcome to serveliza's documentation!
    readme
    installation
    usage
-   modules
+   mixins
    contributing
    authors
    history
