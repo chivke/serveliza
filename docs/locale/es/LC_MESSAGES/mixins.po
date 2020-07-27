@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: serveliza 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-27 10:36-0400\n"
+"POT-Creation-Date: 2020-07-27 11:15-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
 
-#: ../../modules.rst:3
+#: ../../mixins.rst:3
 msgid "Mixins"
 msgstr ""
 
@@ -26,6 +26,10 @@ msgid "PDF Mixins"
 msgstr ""
 
 #: of serveliza.mixins.pdf:4
+msgid ":mod:`serveliza.mixins.pdf`"
+msgstr ""
+
+#: of serveliza.mixins.pdf:6
 msgid "This module contains the mixins associated with the handling of PDF files."
 msgstr ""
 
@@ -169,10 +173,4 @@ msgid ""
 "Method to use `pdftotext <https://github.com/jalan/pdftotext>`_         "
 "in a file specified in the argument as a path."
 msgstr ""
-
-#~ msgid "Modules"
-#~ msgstr ""
-
-#~ msgid "Method to take sheetlist of pdf available in directory"
-#~ msgstr ""
 
