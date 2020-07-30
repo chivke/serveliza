@@ -1,18 +1,26 @@
+
 from urllib.error import HTTPError
 import pandas as pd
 import json
 
-CIR_PRES_89_17_NAC_URL = 'https://www.servel.cl/wp-content/uploads/2019/04/resultados_elecciones_presidenciales_ce_1989_2017_Chile.xlsx'
-CIR_PRES_89_17_EXT_URL = 'https://www.servel.cl/wp-content/uploads/2019/04/resultados_elecciones_presidenciales_ce_2017_Extranjero.xlsx'
-CIR_SENA_89_17_URL = 'https://www.servel.cl/wp-content/uploads/2019/04/resultados_elecciones_senadores_ce_1989_2017.xlsx'
-CIR_DIPU_89_17_URL = 'https://www.servel.cl/wp-content/uploads/2019/04/resultados_elecciones_diputados_ce_1989_2017.xlsx'
-CIR_ALCA_04_16_URL = 'https://www.servel.cl/wp-content/uploads/2019/04/resultados_elecciones_alcaldes_ce_2004_2016.xlsx'
-CIR_CONC_04_16_URL = 'https://www.servel.cl/wp-content/uploads/2019/04/resultados_elecciones_concejales_ce_2004_2016.xlsx'
-CIR_ALCO_92_00_URL = 'https://www.servel.cl/wp-content/uploads/2019/04/resultados_elecciones_concejales_ce_1992_al_2000.xlsx'
+CIR_PRES_89_17_NAC_URL = 'https://www.servel.cl/wp-content/uploads/' \
+    '2019/04/resultados_elecciones_presidenciales_ce_1989_2017_Chile.xlsx'
+CIR_PRES_89_17_EXT_URL = 'https://www.servel.cl/wp-content/uploads/' \
+    '2019/04/resultados_elecciones_presidenciales_ce_2017_Extranjero.xlsx'
+CIR_SENA_89_17_URL = 'https://www.servel.cl/wp-content/uploads/' \
+    '2019/04/resultados_elecciones_senadores_ce_1989_2017.xlsx'
+CIR_DIPU_89_17_URL = 'https://www.servel.cl/wp-content/uploads/' \
+    '2019/04/resultados_elecciones_diputados_ce_1989_2017.xlsx'
+CIR_ALCA_04_16_URL = 'https://www.servel.cl/wp-content/uploads/' \
+    '2019/04/resultados_elecciones_alcaldes_ce_2004_2016.xlsx'
+CIR_CONC_04_16_URL = 'https://www.servel.cl/wp-content/uploads/' \
+    '2019/04/resultados_elecciones_concejales_ce_2004_2016.xlsx'
+CIR_ALCO_92_00_URL = 'https://www.servel.cl/wp-content/uploads/' \
+    '2019/04/resultados_elecciones_concejales_ce_1992_al_2000.xlsx'
 
 CIR_ALL_URLS = [
     CIR_PRES_89_17_NAC_URL,
-    #CIR_PRES_89_17_EXT_URL, don't have a commune column
+    # CIR_PRES_89_17_EXT_URL, don't have a commune column
     CIR_SENA_89_17_URL,
     CIR_DIPU_89_17_URL,
     CIR_ALCA_04_16_URL,
@@ -26,6 +34,7 @@ KEY_PROVINCE = 'Nombre Provincia'
 KEY_COMMUNE = 'Comuna'
 KEY_CIR = 'Circunscripción Electoral'
 KEY_CIR2 = 'Nombre Circunscripción Electoral'
+
 
 def get_communes_circuns(url=None, verbose=False, export_json=False):
     '''
@@ -60,19 +69,21 @@ def get_communes_circuns(url=None, verbose=False, export_json=False):
         else:
             key_cir = KEY_CIR
         data = doc[[KEY_COMMUNE, key_cir]].drop_duplicates()
-        return [{item[KEY_COMMUNE]:item[key_cir]} for key,item in data\
-            .to_dict('index').items()]
+        data = data.to_dict('index').items()
+        return [{item[KEY_COMMUNE]:item[key_cir]} for key, item in data]
     main_data = []
     if not url:
         if verbose:
             print('''Running in all urls availables''')
         for i, u in enumerate(CIR_ALL_URLS):
             if verbose:
-                print(f'''Getting the xls file {str(i+1)}/{str(len(CIR_ALL_URLS))}''')
+                print(
+                    'Getting the xls file '
+                    f'{str(i+1)}/{str(len(CIR_ALL_URLS))}')
             dic = __url_to_dic(u)
             if not dic:
                 if verbose:
-                    print(f'''Not data found''')
+                    print('''Not data found''')
                 continue
             if verbose:
                 print(f'Partial data founded {str(len(dic))} circunscriptions')
@@ -88,18 +99,19 @@ def get_communes_circuns(url=None, verbose=False, export_json=False):
         print(f'Data founded: {str(len(main_data))} circunscriptions')
     result = {}
     for item in main_data:
-        for k,v in item.items():
+        for k, v in item.items():
             if k in result:
-                if isinstance(v,float):
+                if isinstance(v, float):
                     continue
-                if not v in result[k]:
+                if v not in result[k]:
                     result[k].append(v)
-            elif not isinstance(v,float):
+            elif not isinstance(v, float):
                 result[k] = [v]
     if verbose:
         print(f'Total communes: {str(len(result))}')
-        print(f'Total circunscriptions: {sum([len(x) for x in result.values()])}')
+        print(
+            'Total circunscriptions: '
+            f'{sum([len(x) for x in result.values()])}')
     if export_json:
         return json.dumps(result)
     return result
-
