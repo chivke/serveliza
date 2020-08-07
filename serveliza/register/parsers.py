@@ -1,23 +1,37 @@
+'''
+Register parsers
+-----------------
 
+:mod:`serveliza.register.parsers`
+
+Contains parser class for electoral register.
+'''
+
+# builtin libraries
 import re
-
-from datetime import datetime as dt
-from slugify import slugify
 import json
+from datetime import datetime as dt
+
+# third party libraries
+from slugify import slugify
 
 
 class SheetRegisterParser:
     '''
-    Sheet electoral register parser.
+    Parser is intended to be instantiated by each sheet.
 
-    Sheet to parse must be provied in construtor \
-    and be string.
+    Class attributes beginning with "*regex_*" correspond to the regular \
+    expressions used to detect fields in the header. The *regexs_entries* \
+    class attribute contains a dictionary with the regular expressions \
+    for the fields in each record and a key name for each. Finally, the \
+    *dpa_fixture_path* class attribute defines the path of the .json file \
+    that contains a compressed dictionary with communes and constituencies.
     '''
 
     regex_begin = r'^REPUBLICA\s+DE\s+CHILE'
     regex_register = r'(PADRON\s+ELECTORAL\s+[A-Z]+)\s+-?\s+ELECCIONES'
     regex_election = r'ELECCIONES[A-Z,\s]+\d+'
-    regex_region = r'REGION[0,]*\s*:\s*([A-Z\s]*\s{3})'
+    regex_region = r'REGION[0,]*\s*:\s*([A-Z\s.]*\s{3})'
     regex_commune = r'COMUNA[0,]*\s*:\s*([A-Z\s]*\s{3})'
     regex_province = r'PROVINCIA[0,]*\s*:\s*([A-Z\s]*)'
 
@@ -30,26 +44,62 @@ class SheetRegisterParser:
     dpa_fixture_path = 'serveliza/utils/fixtures/'\
         'DPA-commune-circuns.json'
 
+    # Properties
+    # -----------
+    #
     @property
     def sheet(self):
+        '''
+        Property that contains a text string of the entire sheet to parse or \
+        the list of text lines if it is decomposed.
+
+        >>> parser.sheet
+        '...' | ['...', '...']
+        '''
         return self._sheet
 
     @property
     def header(self):
+        '''
+        Property that contains the result of method :meth:`parse_header \
+        <.SheetRegisterParser.parse_header>`. It consists of a \
+        dictionary with the data from the header of the electoral roll sheet.
+
+        >>> parser.header
+        {
+            'register': 'PADRON...',
+            'election': 'ELECCION...',
+            'year':     2020,
+            'region':   'METRO...',
+            'commune':  'SANTIA...',
+            'province': 'SANTIA...',
+        }
+        '''
         return self._header
-    
+
     @property
     def fields(self):
+        '''
+        Property that contains the fields of the electoral register \
+        detected in the sheet through the :meth:`parse_fields \
+        <.SheetRegisterParser.parse_fields` method.
+        '''
         return self._fields
-    
+
     @property
     def entries(self):
+        '''
+        Property containing a list of entries from the electoral register \
+        sheet. Each entry corresponds to a list of data in the order of the \
+        fields defined in the :attr:`fields <SheetRegisterParser.fields>` \
+        property.
+        '''
         return self._entries
 
     @property
     def metadata(self):
         return self._metadata
-    
+
     @property
     def errors(self):
         return self._errors
@@ -65,7 +115,7 @@ class SheetRegisterParser:
     @property
     def fields_index(self):
         return self._fields_index
-    
+
     @property
     def circuns(self):
         return self._circuns
@@ -170,27 +220,6 @@ class SheetRegisterParser:
             # try to take entry again
             rescue_entries = self.__rescue_entries(malformed)
             entries += rescue_entries
-            #pentries = []
-            #lastentry = ''
-            #for txt in malformed:
-            #    if re.match(r'^\w+', txt):
-            #        if lastentry:
-            #            pentries.append(lastentry)
-            #        lastentry = txt
-            #    elif lastentry:
-            #        lastentry += txt
-            #    else:
-            #        self._errors.append({
-            #            'code'  : 'malformed-no-start',
-            #            'target': txt } )
-            #for e in pentries:
-            #    entry = self.parse_entry(e)
-            #    if not entry:
-            #        self._errors.append({
-            #            'code'  : 'malformed-no-entry',
-            #            'target': e } )
-            #    else:
-            #        entries.append(entry)
             self._metadata['entries']['rescue'] = len(entries) - total_entries
             total_entries = len(entries)
         self._metadata['entries']['total'] = total_entries
@@ -256,48 +285,6 @@ class SheetRegisterParser:
         entry.insert(3, self.header['province'])
         entry.insert(3, self.header['region'])
         return entry
-
-        # entry = []
-        # first_fields = ['name','rut','sex','circun','table']
-        # dir_ini = None
-        # dir_end = None
-        # for key in first_fields:
-        #     value = None
-        #     if key == 'circun':
-        #         for cir in self.circuns:
-        #             if cir in line:
-        #                 value = cir
-        #     else:
-        #         value = self.__parser(
-        #             regex=getattr(self, 'regex_'+key),
-        #             target=line, ecode='entry-'+key)
-        #     if value:
-        #         if key == 'sex':
-        #             dir_ini = re.search(value, line).end()
-        #         elif key == 'circun':
-        #             dir_end = re.search(value, line).start()
-        #     else:
-        #         self._metadata['nulls-total'] += 1
-        #         if not 'nulls-'+key in self._metadata:
-        #             self._metadata['nulls-'+key] = 1
-        #         else:
-        #             self._metadata['nulls-'+key] += 1
-        #     entry.append(value)
-        # # electoral direction
-        # direction = None
-        # if dir_ini and dir_end:
-        #     direction = line[dir_ini:dir_end].strip()
-        # else:
-        #     self._metadata['nulls-total'] += 1
-        #     if 'nulls-dir' not in self._metadata:
-        #         self._metadata['nulls-dir'] = 1
-        #     else:
-        #         self._metadata['nulls-dir'] += 1
-        # entry.insert(3, direction)
-        # entry.insert(3, self.header['commune'])
-        # entry.insert(3, self.header['province'])
-        # entry.insert(3, self.header['region'])
-        # return entry
 
     def __rescue_entries(self, malformed):
         pentries = []
