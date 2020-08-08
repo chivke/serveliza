@@ -59,6 +59,14 @@ class SheetRegisterParser:
         return self._sheet
 
     @property
+    def decomposed(self):
+        '''
+        Property that indicates whether the '*sheet*' property is decomposed \
+        into a list of lines or not.
+        '''
+        return isinstance(self.sheet, list)
+
+    @property
     def header(self):
         '''
         Property that contains the result of method :meth:`parse_header \
@@ -98,38 +106,73 @@ class SheetRegisterParser:
 
     @property
     def metadata(self):
+        '''
+        Property contains the metadata extracted during the parser analysis \
+        of the electoral register sheet.
+        The metadata is stored as a dictionary, the \'*rid*\' key \
+        corresponding to the unique identifier of the voter registry of the \
+        sheet, the \'*times*\' key stores how long the analysis took (in \
+        total, during header, fields and entries), the \'*entries*\' key \
+        contains the total number of entries extracted , the amount of \
+        rescued and errors. Finally, the NULLS key contains the total \
+        number of null data inside each row or entry, as well as the detail \
+        of the fields, if there is any.
+
+        >>> parser.metadata
+        {
+            'rid': 'PEA-EM-2016',
+            'times': {
+                'total': datetime.timedelta(microseconds=4),
+                'header': datetime.timedelta(microseconds=1),
+                'fields': datetime.timedelta(microseconds=1),
+                'entries': datetime.timedelta(microseconds=2),
+            },
+            'entries': {'total': 1, 'rescue': 0, 'errors': 0},
+            'nulls': {'total': 0}
+        }
+        '''
         return self._metadata
 
     @property
     def errors(self):
+        '''
+        Property contains a list with the errors found in the sheet analysis. \
+        Each error corresponds to a dictionary with at least two keys: \
+        \'*code*\' with a semantic slug text of the error and '*target*' that \
+        contains what generated the error.
+        '''
         return self._errors
 
     @property
-    def has_errors(self):
-        return bool(self._errors)
-
-    @property
-    def decomposed(self):
-        return self._decomposed
-
-    @property
     def fields_index(self):
+        '''
+        Property that contains the index where the fields are located in the \
+        decomposed sheet as a list.
+        '''
         return self._fields_index
 
     @property
     def circuns(self):
+        '''
+        Property that contains the possible electoral circunscriptions \
+        within the commune defined in the :attr:`header \
+        <.SheetRegisterParser.header>` property. It will return None if \
+        the :meth:`parse_header <.SheetRegisterParser.parse_header>` \
+        method has not been executed.
+        '''
         return self._circuns
 
-    def decompose(self):
-        '''
-        Method to decompose raw sheet in to \
-        list of lines.
-        '''
-        if not self.decomposed:
-            self._sheet = self._sheet.split('\n')
-            self._decomposed = True
-
     def run(self):
+        '''
+        Method that starts the voter registry sheet analyzer by executing \
+        methods :meth:`decompose <.SheetRegisterParser.decompose>`, \
+        :meth:`parse_header <.SheetRegisterParser.parse_header>` and \
+        :meth:`parse_fields <.SheetRegisterParser.parse_fields>` sequentially.
+
+        It measures the duration times of each method executed and saves \
+        them in the :attr:`metadata[times] <.SheetRegisterParser.metadata>` \
+        property.
+        '''
         start_at = dt.now()
         self.decompose()
         header_at = dt.now()
@@ -148,9 +191,24 @@ class SheetRegisterParser:
             self._metadata['times'] = {}
         self._metadata['times'].update(times)
 
+    def decompose(self):
+        '''
+        Method that descompose a :attr:`sheet <.SheetRegisterParser.sheet>` \
+        of the electoral roll in a text string into a list with each line.
+        '''
+        if not self.decomposed:
+            self._sheet = self._sheet.split('\n')
+
     def parse_header(self):
         '''
-        Return header data.
+        Method that parses the head of the sheet and extracts the data \
+        from *register*, *election*, *year*, *region*, *province* and \
+        *commune* to store it in the :attr:`header \
+        <.SheetRegisterParser.header>` property.
+
+        It also builds a unique identifier of the electoral roll that \
+        it stores in the :attr:`metadata <.SheetRegisterParser.metadata>` \
+        property with the *rid* key.
         '''
         def __identify(header):
             id_reg = ''.join([w[0] for w in header['register'].split(' ')])
