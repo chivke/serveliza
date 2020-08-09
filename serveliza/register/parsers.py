@@ -245,6 +245,14 @@ class SheetRegisterParser:
                 'target': header['commune']})
 
     def parse_fields(self):
+        '''
+        Method to analyze and extract the fields of the electoral register. \
+        The direct fields of the sheet (*nombre*, *c-identidad*, *sex|o*, \
+        *domicilio-electoral*, *circunscripcion* y *mesa*) are taken and \
+        commune, province and region (*comuna*, *provincia*, *region*) are \
+        added. Result is stored in the :attr:`fields \
+        <SheetRegisterParser.fields>` property, the method returns nothing.
+        '''
         index = self.__get_fields_index()
         if not index:
             return None
@@ -259,6 +267,24 @@ class SheetRegisterParser:
         self._fields.insert(3, 'region')
 
     def parse_entries(self):
+        '''
+        Method that analyzes and extracts each data entry from the voter \
+        registration sheet.
+
+        First determine if each line of text is well composed, that is, \
+        it begins with at least one letter and ends with a number or a space \
+        next to a single letter. Then each line of text is analyzed as if it \
+        were an input through the :meth:`parse_entry \
+        <.SheetRegisterParser.parse_entry>` method.
+
+        Afterwards, the lines considered malformed are internally processed, \
+        joining them in relation to whether they start with a letter or a \
+        space. Then use the :meth:`parse_entry \
+        <.SheetRegisterParser.parse_entry>` method again for each of them. \
+        Those that are rescued will remain in the :attr:`metadata \
+        <.SheetRegisterParser.metadata>` property in the keys *entires* > \
+        *rescue*.
+        '''
         index = self.__get_fields_index() + 1
         if not index:
             return None
@@ -284,6 +310,18 @@ class SheetRegisterParser:
         self._entries = entries
 
     def parse_entry(self, line):
+        '''
+        A method that extracts the data from a voter registry entry in text \
+        line format.
+
+        Finds the fields found by regular expressions that are stored in the \
+        class attribute: attr: `regexs_entries \
+        <.SheetRegisterParser.regexs_entries>`.
+
+        Then it looks for the district from a list according to its commune \
+        and in relation to this it determines the place of the electoral \
+        domicile.
+        '''
         def __regex_fields(line, fields):
             attr_fields = ['name', 'rut', 'sex', 'table']
             fields = [fields[0], fields[1], fields[2], fields[-1]]
