@@ -1,13 +1,14 @@
 '''
-Register parsers
+roll parsers
 -----------------
 
-:mod:`serveliza.register.parsers`
+:mod:`serveliza.roll.parsers`
 
-Contains parser class for electoral register.
+Contains parser class for electoral roll.
 '''
 
 # builtin libraries
+import os
 import re
 import json
 from datetime import datetime as dt
@@ -16,7 +17,7 @@ from datetime import datetime as dt
 from slugify import slugify
 
 
-class SheetRegisterParser:
+class SheetRollParser:
     '''
     Parser is intended to be instantiated by each sheet.
 
@@ -29,19 +30,20 @@ class SheetRegisterParser:
     '''
 
     regex_begin = r'^REPUBLICA\s+DE\s+CHILE'
-    regex_register = r'(PADRON\s+ELECTORAL\s+[A-Z]+)\s+-?\s+ELECCIONES'
-    regex_election = r'ELECCIONES[A-Z,\s]+\d+'
-    regex_region = r'REGION[0,]*\s*:\s*([A-Z\s.]*\s{3})'
-    regex_commune = r'COMUNA[0,]*\s*:\s*([A-Z\s]*\s{3})'
-    regex_province = r'PROVINCIA[0,]*\s*:\s*([A-Z\s]*)'
-
+    regex_roll = r'PADRO?Ó?N\s+ELECTORAL\s+[A-Z,\s-]+\d+'
+    regex_region = r'REGIO?Ó?N[0,]*\s*:\s*([A-ZÑ\'\s.]*\s{3})'
+    regex_commune = r'COMUNA[0,]*\s*:\s*([A-ZÑ\' ]*\s{3})'
+    regex_province = r'PROVINCIA[0,]*\s*:\s*([A-ZÑ\' ]*)'
+    # optionals
+    regex_total_entries = r'Registros\s*:\s*(\d+)'
+    regex_pagination = r'[PAaáGgIiNn]+\s*:?\s*(\d*)\s*de\s*(\d*)'
     regexs_entries = {
         'name': r'^[A-ZÑa-z\s]+',
         'rut': r'\d*\.?\d+\.\d+-[0-9kK]',
-        'sex': r'\sVAR\s|\sMUJ\s',
+        'sex': r'\s(VAR|MUJ)[ONER]*\s',
         'table': r'\s(\d+\s?\w?)\s*\d*$'}
 
-    dpa_fixture_path = 'serveliza/utils/fixtures/'\
+    dpa_fixture_path = '../utils/fixtures/'\
         'DPA-commune-circuns.json'
 
     # Properties
@@ -70,12 +72,12 @@ class SheetRegisterParser:
     def header(self):
         '''
         Property that contains the result of method :meth:`parse_header \
-        <.SheetRegisterParser.parse_header>`. It consists of a \
+        <.SheetRollParser.parse_header>`. It consists of a \
         dictionary with the data from the header of the electoral roll sheet.
 
         >>> parser.header
         {
-            'register': 'PADRON...',
+            'roll': 'PADRON...',
             'election': 'ELECCION...',
             'year':     2020,
             'region':   'METRO...',
@@ -88,18 +90,18 @@ class SheetRegisterParser:
     @property
     def fields(self):
         '''
-        Property that contains the fields of the electoral register \
+        Property that contains the fields of the electoral roll \
         detected in the sheet through the :meth:`parse_fields \
-        <.SheetRegisterParser.parse_fields` method.
+        <.SheetRollParser.parse_fields` method.
         '''
         return self._fields
 
     @property
     def entries(self):
         '''
-        Property containing a list of entries from the electoral register \
+        Property containing a list of entries from the electoral roll \
         sheet. Each entry corresponds to a list of data in the order of the \
-        fields defined in the :attr:`fields <SheetRegisterParser.fields>` \
+        fields defined in the :attr:`fields <SheetRollParser.fields>` \
         property.
         '''
         return self._entries
@@ -108,7 +110,7 @@ class SheetRegisterParser:
     def metadata(self):
         '''
         Property contains the metadata extracted during the parser analysis \
-        of the electoral register sheet.
+        of the electoral roll sheet.
         The metadata is stored as a dictionary, the \'*rid*\' key \
         corresponding to the unique identifier of the voter registry of the \
         sheet, the \'*times*\' key stores how long the analysis took (in \
@@ -121,12 +123,6 @@ class SheetRegisterParser:
         >>> parser.metadata
         {
             'rid': 'PEA-EM-2016',
-            'times': {
-                'total': datetime.timedelta(microseconds=4),
-                'header': datetime.timedelta(microseconds=1),
-                'fields': datetime.timedelta(microseconds=1),
-                'entries': datetime.timedelta(microseconds=2),
-            },
             'entries': {'total': 1, 'rescue': 0, 'errors': 0},
             'nulls': {'total': 0}
         }
@@ -156,24 +152,27 @@ class SheetRegisterParser:
         '''
         Property that contains the possible electoral circunscriptions \
         within the commune defined in the :attr:`header \
-        <.SheetRegisterParser.header>` property. It will return None if \
-        the :meth:`parse_header <.SheetRegisterParser.parse_header>` \
+        <.SheetRollParser.header>` property. It will return None if \
+        the :meth:`parse_header <.SheetRollParser.parse_header>` \
         method has not been executed.
         '''
         return self._circuns
 
+    @property
+    def more_fields(self):
+        return self._more_fields
+
     def run(self):
         '''
         Method that starts the voter registry sheet analyzer by executing \
-        methods :meth:`decompose <.SheetRegisterParser.decompose>`, \
-        :meth:`parse_header <.SheetRegisterParser.parse_header>` and \
-        :meth:`parse_fields <.SheetRegisterParser.parse_fields>` sequentially.
+        methods :meth:`decompose <.SheetRollParser.decompose>`, \
+        :meth:`parse_header <.SheetRollParser.parse_header>` and \
+        :meth:`parse_fields <.SheetRollParser.parse_fields>` sequentially.
 
         It measures the duration times of each method executed and saves \
-        them in the :attr:`metadata[times] <.SheetRegisterParser.metadata>` \
+        them in the :attr:`metadata[times] <.SheetRollParser.metadata>` \
         property.
         '''
-        start_at = dt.now()
         self.decompose()
         header_at = dt.now()
         self.parse_header()
@@ -183,17 +182,17 @@ class SheetRegisterParser:
         self.parse_entries()
         finish_at = dt.now()
         times = {
-            'total': finish_at - start_at,
             'header': fields_at - header_at,
             'fields': entries_at - fields_at,
             'entries': finish_at - entries_at}
+        times['total'] = times['header'] + times['fields'] + times['entries']
         if 'times' not in self._metadata:
             self._metadata['times'] = {}
         self._metadata['times'].update(times)
 
     def decompose(self):
         '''
-        Method that descompose a :attr:`sheet <.SheetRegisterParser.sheet>` \
+        Method that descompose a :attr:`sheet <.SheetRollParser.sheet>` \
         of the electoral roll in a text string into a list with each line.
         '''
         if not self.decomposed:
@@ -202,42 +201,46 @@ class SheetRegisterParser:
     def parse_header(self):
         '''
         Method that parses the head of the sheet and extracts the data \
-        from *register*, *election*, *year*, *region*, *province* and \
+        from *roll*, *election*, *year*, *region*, *province* and \
         *commune* to store it in the :attr:`header \
-        <.SheetRegisterParser.header>` property.
+        <.SheetRollParser.header>` property.
 
         It also builds a unique identifier of the electoral roll that \
-        it stores in the :attr:`metadata <.SheetRegisterParser.metadata>` \
+        it stores in the :attr:`metadata <.SheetRollParser.metadata>` \
         property with the *rid* key.
         '''
         def __identify(header):
-            id_reg = ''.join([w[0] for w in header['register'].split(' ')])
-            id_ele = re.sub(r'[0-9Y]', '', ''.join(
-                [w[0] for w in header['election'].split(' ')]))
-            return f'{id_reg}-{id_ele}-{str(header["year"])}'
-        self.__parser(
-            self.regex_begin, self.sheet[0],
-            'header-invalid-begin')
-        attributes = [
-            ('register', self.sheet[0]),
-            ('election', self.sheet[0]),
-            ('region',   self.sheet[1]+self.sheet[2]),
-            ('commune',  self.sheet[1]+self.sheet[2]),
-            ('province', self.sheet[2]+'--'+self.sheet[3])]
+            id_roll = re.sub(r'[0-9\tYa-z]', '', ''.join(
+                [w[0] for w in header['roll'].split(' ') if len(w) > 2]))
+            return f'{id_roll}-{str(header["year"])}'
+        idx = self.__get_fields_index()
+        target = ' \t '.join(self.sheet[:idx])
+        attributes = ['roll', 'region', 'commune', 'province']
         header = {}
-        for key, target in attributes:
-            header[key] = self.__parser(
-                regex=getattr(self, 'regex_'+key),
-                target=target, ecode='header-no-'+key)
-        header['year'] = int(self.__parser(
-            r'\d+$', header['election'], 'header-no-year'))
+        for attr in attributes:
+            header[attr] = self.__parser(
+                regex=getattr(self, 'regex_'+attr),
+                target=target, ecode='header-no-'+attr)
+        year = self.__parser(
+            r'\d+$', header['roll'], 'header-no-year')
+        if year:
+            header['year'] = int(year)
+        total_entries = re.findall(self.regex_total_entries, target)
+        if total_entries:
+            header['total_entries'] = int(total_entries[0].strip())
+        pagination = re.findall(self.regex_pagination, target)
+        if pagination and len(pagination[0]) > 2 and pagination[0]:
+            header['pagination'] = pagination[0]
         self._metadata['rid'] = __identify(header)
         self._header = header
-        with open(self.dpa_fixture_path) as f:
+        with open(os.path.dirname(__file__)+'/'+self.dpa_fixture_path) as f:
             fixture = json.load(f)
+        if 'PAGINA' in header['commune']:
+            header['commune'] = header['commune'].replace('PAGINA', '').strip()
         if header['commune'] in fixture:
             self._circuns = fixture[header['commune']]
         else:
+            import pdb; pdb.set_trace()
             self._circuns = None
             self._errors.append({
                 'code': 'commune-not-in-fixture',
@@ -246,12 +249,12 @@ class SheetRegisterParser:
 
     def parse_fields(self):
         '''
-        Method to analyze and extract the fields of the electoral register. \
+        Method to analyze and extract the fields of the electoral roll. \
         The direct fields of the sheet (*nombre*, *c-identidad*, *sex|o*, \
         *domicilio-electoral*, *circunscripcion* y *mesa*) are taken and \
         commune, province and region (*comuna*, *provincia*, *region*) are \
         added. Result is stored in the :attr:`fields \
-        <SheetRegisterParser.fields>` property, the method returns nothing.
+        <SheetRollParser.fields>` property, the method returns nothing.
         '''
         index = self.__get_fields_index()
         if not index:
@@ -262,9 +265,11 @@ class SheetRegisterParser:
         self._fields = list(map(
             lambda x: slugify(x),
             fields_line.split()))
-        self._fields.insert(3, 'comuna')
-        self._fields.insert(3, 'provincia')
-        self._fields.insert(3, 'region')
+        if self.more_fields:
+            self._fields.insert(3, 'comuna')
+            self._fields.insert(3, 'provincia')
+            self._fields.insert(3, 'region')
+            self._fields.append('reference')
 
     def parse_entries(self):
         '''
@@ -275,14 +280,14 @@ class SheetRegisterParser:
         it begins with at least one letter and ends with a number or a space \
         next to a single letter. Then each line of text is analyzed as if it \
         were an input through the :meth:`parse_entry \
-        <.SheetRegisterParser.parse_entry>` method.
+        <.SheetRollParser.parse_entry>` method.
 
         Afterwards, the lines considered malformed are internally processed, \
         joining them in relation to whether they start with a letter or a \
         space. Then use the :meth:`parse_entry \
-        <.SheetRegisterParser.parse_entry>` method again for each of them. \
+        <.SheetRollParser.parse_entry>` method again for each of them. \
         Those that are rescued will remain in the :attr:`metadata \
-        <.SheetRegisterParser.metadata>` property in the keys *entires* > \
+        <.SheetRollParser.metadata>` property in the keys *entires* > \
         *rescue*.
         '''
         index = self.__get_fields_index() + 1
@@ -306,6 +311,7 @@ class SheetRegisterParser:
             entries += rescue_entries
             self._metadata['entries']['rescue'] = len(entries) - total_entries
             total_entries = len(entries)
+        self._metadata['entries']['errors'] = len(self.errors)
         self._metadata['entries']['total'] = total_entries
         self._entries = entries
 
@@ -316,7 +322,7 @@ class SheetRegisterParser:
 
         Finds the fields found by regular expressions that are stored in the \
         class attribute: attr: `regexs_entries \
-        <.SheetRegisterParser.regexs_entries>`.
+        <.SheetRollParser.regexs_entries>`.
 
         Then it looks for the district from a list according to its commune \
         and in relation to this it determines the place of the electoral \
@@ -339,11 +345,19 @@ class SheetRegisterParser:
             return values
 
         def __parse_circun(line, field):
-            value = None
-            for cir in self.circuns:
-                if cir in line:
-                    value = cir
+            largest = len(sorted(self.circuns, key=lambda x: len(x))[-1])
+            table_position = re.search(
+                r'\s*'+self.regexs_entries['table'], line)
+            if not table_position:
+                table_position = 150
+            else:
+                table_position = table_position.start()
+            cut = table_position - largest
+            value = [c for c in self.circuns if c+'  ' in line[cut:]]
             if not value:
+                value = [c for c in self.circuns if c in line[cut:]]
+                if value and len(value) == 1:
+                    return value[0]
                 self._errors.append({
                     'code': 'entry-' + field + '-not-found',
                     'circuns': self.circuns,
@@ -352,34 +366,50 @@ class SheetRegisterParser:
                     self._metadata['nulls'][field] = 1
                 else:
                     self._metadata['nulls'][field] += 1
-            return value
+                return None
+            return value[0]
 
         def __parse_dir(line, sex, circun, field):
-            ini = re.search(sex, line).end()
-            end = re.search(circun, line).start()
-            if ini and end:
-                return line[ini:end].strip()
+            ini = re.search(sex, line)
+            end = re.search(
+                str(circun) + r'\s*' + self.regexs_entries['table'], line)
+            if not end:
+                end = -1
             else:
+                end = end.start()
+            if not ini:
                 self._errors.append({
                     'code': 'entry-' + field + '-not-found',
-                    'reason': 'sex end and circun init not found',
+                    'reason': 'sex end not found',
                     'target': line})
-                if field not in self._metadata['nulls']:
-                    self._metadata['nulls'][field] = 1
-                else:
-                    self._metadata['nulls'][field] += 1
-
+            else:
+                ini = ini.end()
+                direction = line[ini:end].strip()
+                if direction:
+                    return direction
+            if field not in self._metadata['nulls']:
+                self._metadata['nulls'][field] = 1
+            else:
+                self._metadata['nulls'][field] += 1
         if 'nulls' not in self.metadata:
             self._metadata['nulls'] = {'total': 0}
         regex_vals = __regex_fields(line, self.fields)
         entry = regex_vals
         circun = __parse_circun(line, self.fields[-2])
         entry.insert(3, circun)
-        direction = __parse_dir(line, regex_vals[2], circun, self.fields[-3])
+        direction = __parse_dir(
+            line, self.regexs_entries['sex'], circun, self.fields[-3])
         entry.insert(3, direction)
-        entry.insert(3, self.header['commune'])
-        entry.insert(3, self.header['province'])
-        entry.insert(3, self.header['region'])
+        if self.more_fields:
+            entry.insert(3, self.header['commune'])
+            entry.insert(3, self.header['province'])
+            entry.insert(3, self.header['region'])
+            reference = self.metadata['rid']
+            reference += '-' + slugify(self.header['commune'])
+            if 'pagination' in self.header:
+                pag = self.header['pagination']
+                reference += '-page-' + str(pag[0]) + '-of-' + str(pag[1])
+            entry.append(reference)
         return entry
 
     def __rescue_entries(self, malformed):
@@ -421,14 +451,14 @@ class SheetRegisterParser:
             'target': self.sheet})
 
     def __parser(self, regex, target, ecode):
-        parsed = re.findall(regex, target)
+        parsed = re.findall(regex, target) if isinstance(target, str) else None
         if not bool(parsed):
             self._errors.append({
                 'code': ecode,
                 'regex': regex,
                 'target': target})
             return None
-        return parsed[0].strip()
+        return re.sub(r'\s+', ' ', parsed[0].strip())
 
     def __launch_props(self):
         self._decomposed = False
@@ -439,9 +469,11 @@ class SheetRegisterParser:
         self._entries = []
         self._errors = []
 
-    def __init__(self, sheet, auto=True, *args, **kwargs):
-        if not isinstance(sheet, str):
+    def __init__(self, sheet, auto=True, more_fields=True, *args, **kwargs):
+        if not isinstance(sheet, str) or not sheet:
+            import pdb; pdb.set_trace()
             raise TypeError('\'sheet\' arg must be string')
+        self._more_fields = bool(more_fields)
         self.__launch_props()
         self._sheet = sheet
         if auto:

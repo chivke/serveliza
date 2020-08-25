@@ -1,4 +1,0 @@
-
-from .register import (
-    ElectoralRegister,
-    )
