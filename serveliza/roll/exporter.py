@@ -1,6 +1,8 @@
 from pathlib import Path
+from datetime import datetime, timedelta
 from string import ascii_letters
 import random
+import yaml
 from slugify import slugify
 import csv
 
@@ -24,9 +26,31 @@ class RollExporter:
                 writer.writerow(entry)
         return str(file.absolute())
 
-    def export_summary(self, metadata):
-        if not self.export:
+    def export_summary(self, rid, metadata):
+        def metadata_serializer(meta):
+            meta = {**meta}
+            for key in meta:
+                if isinstance(meta[key], dict):
+                    meta[key] = metadata_serializer(meta[key])
+                elif isinstance(meta[key], datetime) or isinstance(
+                        meta[key], timedelta):
+                    meta[key] = str(meta[key])
+                else:
+                    continue
+            return meta
+        if not self.export or not self.summary:
             return None
+        metadata = metadata_serializer(metadata)
+        # files_num = len(metadata['files'])
+        # analysis = metadata['analysis']
+        # duration = analysis['finalized'] - analysis['started']
+        # durations = analysis['durations']
+        # rolls = metadata['rolls']
+        file = self.create_summary(rid)
+        with file.open('w') as f:
+            f.write('# Serveliza summary\n')
+            f.write(yaml.dump(metadata))
+        return str(file.absolute())
 
     def get_or_create_file(self, parsed):
         suffix, created = '', False
@@ -35,35 +59,30 @@ class RollExporter:
         name = f'{parsed.metadata["rid"]}-{suffix}data'
         if self.random_suffix:
             name += f'-{self.random_suffix}'
-        name += '.txt'
+        name += '.csv'
         file = self.output / name
         if not file.exists():
             created = True
             file.touch()
         return file, created
 
-    def get_or_create_summary(self, parsed):
-        created = False
-        name = f'{parsed.metadata["rid"]}-summary'
+    def create_summary(self, rid):
+        name = f'{rid}-summary'
         if self.random_suffix:
             name += f'-{self.random_suffix}'
         name += '.txt'
         summary = self.output / name
-        if not summary.exists():
-            created = True
-            summary.touch()
-        return summary, created
+        return summary
 
     @property
     def output(self):
         '''
+        Directory to store the data in .csv.
         '''
         return self._output
 
     @output.setter
     def output(self, output):
-        '''
-        '''
         output_path = Path(str(output))
         try:
             output_path.mkdir(parents=True, exist_ok=True)
@@ -73,6 +92,11 @@ class RollExporter:
 
     @property
     def mode(self):
+        '''
+        'Determines the data export mode in files. If it is "unified" \
+        (default) it creates a single csv file with the data, or if it is "separated" \
+        into several according to communal or regional criteria.'
+        '''
         return self._mode
 
     @mode.setter
@@ -84,6 +108,9 @@ class RollExporter:
 
     @property
     def mode_sep(self):
+        '''
+        Criteria for separating files in export in separate mode.
+        '''
         return self._mode_sep
 
     @mode_sep.setter
@@ -101,7 +128,19 @@ class RollExporter:
 
     @property
     def random_suffix(self):
+        '''
+        Determines whether exported files have a random \
+        text string appended to the end.
+        '''
         return self._random_suffix
+
+    @property
+    def summary(self):
+        '''
+        Determines whether to generate a summary file of \
+        the export and the extracted data.
+        '''
+        return self._summary
 
     def __init__(self, *args, **kwargs):
         self._export = bool(kwargs.get('export', False))
@@ -115,4 +154,4 @@ class RollExporter:
         if kwargs.get('random_suffix', True):
             self._random_suffix = ''.join([random.choice(
                 ascii_letters) for x in range(5)])
-        self._summary = bool(kwargs.get('random_suffix', True))
+        self._summary = bool(kwargs.get('summary', True))

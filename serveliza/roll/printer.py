@@ -140,13 +140,48 @@ class RollPrinter(ColorMixin):
         msg += f' | {str(metadata["duration"])[:-7]}'
         print(msg)
 
-    def run_finalized(self, finalized, files_num):
+    def run_finalized(self, finalized, metadata):
         '''
         '''
         if not self.verbose:
             return None
-        msg = self.info(f'\nAnalysis of {str(files_num)} files finished.')+'\n'
+        files_num = len(metadata['files'])
+        analysis = metadata['analysis']
+        duration = analysis['finalized'] - analysis['started']
+        durations = analysis['durations']
+        rolls = metadata['rolls']
+        msg = ''
+        for rid, roll in rolls.items():
+            re = [x for x in roll['regions'] if x]
+            pro = [x for x in roll['provinces'] if x]
+            com = [x for x in roll['communes'] if x]
+            ent = roll['entries']
+            regions = ','.join(re) if len(re) < 3 else str(len(re))
+            provinces = ','.join(pro) if len(pro) < 3 else str(len(pro))
+            communes = ','.join(com) if len(com) < 3 else str(len(com))
+            msg += self.info('Roll: ')+f'{roll["roll"]}.\n'
+            msg += self.info('Entries: ')+self.ok(ent['total'])+'\t'
+            msg += self.info('Errors: ')+self.error(ent['errors'])+'\n'
+            msg += self.info('Region(s): ')+regions+'.\n'
+            msg += self.info('Province(s): ')+provinces+'.\n'
+            msg += self.info('Commune(s): ')+communes+'.\n'
+        if 'exported_to' in metadata:
+            msg += '\nExported to:'
+            for path in metadata['exported_to']:
+                msg += self.ok(f'\n > {path}')
+        msg += self.info(f'\n\nAnalysis of {str(files_num)} files finished.')+'\n'
         msg += self.lead(f'At {str(finalized)[:-7]}.')
+        msg += '\n'+self.warn('Duration: ')+f'{str(duration)[:-7]}'
+        msg += self.lead(
+            f'\n- processing: {str(durations["processing"])}'
+            f'\n- adapting: {str(durations["adapting"])}'
+            f'\n- parsing: {str(durations["parsing"])}')
+        if durations['memorizing']:
+            msg += self.lead(
+                f'\n- memorizing: {str(durations["memorizing"])}')
+        if durations['exporting']:
+            msg += self.lead(
+                f'\n- exporting: {str(durations["exporting"])}')
         print(msg)
 
     def __init__(self, *args, **kwargs):
@@ -181,9 +216,6 @@ class RollPrinter(ColorMixin):
             msg += f'[{(len(self.metadata["files"]))} files]'
         msg += '>'
         return msg
-
-    def str(self):
-        return None
 
     def runned_tag(self, runned):
         if runned:

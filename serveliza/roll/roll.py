@@ -14,6 +14,14 @@ from .memorizer import RollMemorizer
 from .exporter import RollExporter
 
 
+DURATIONS_SCHEMA = {
+    'processing': timedelta(),
+    'adapting': timedelta(),
+    'parsing': timedelta(),
+    'memorizing': timedelta(),
+    'exporting': timedelta()}
+
+
 class ElectoralRoll(PDFProcessorMixin):
     '''
     :class:`ElectoralRoll <.ElectoralRoll>` allows to \
@@ -76,18 +84,21 @@ class ElectoralRoll(PDFProcessorMixin):
         files = [x[1] for x in sorted(
             files.items(), key=lambda x: x[1]['bytes'])]
         for idx, file in enumerate(files):
-            self.run_file(file, idx+1, len(files))
+            self.run_file(file, idx, len(files))
         finalized = dt.now()
         self._metadata['analysis']['finalized'] = finalized
+        summary = self.exporter.export_summary(self.rid, self.metadata)
+        if summary:
+            self._metadata['exported_to'].append(summary)
         self._runned = True
-        self.printer.run_finalized(finalized, len(files))
+        self.printer.run_finalized(finalized, self.metadata)
 
     def run_file(self, file, file_num, file_total):
         '''
         '''
 
         def get_progress(self, rid, files, sheets):
-            metadata = self.metadata.get(rid, {})
+            metadata = self.metadata['rolls'].get(rid, {})
             if not metadata:
                 metadata['entries'] = {'total': 0, 'errors': 0}
             return {
@@ -197,10 +208,10 @@ class ElectoralRoll(PDFProcessorMixin):
         It integrates the metadata of each electoral register detected \
         in the analysis.
         '''
-        stored = {}
+        stored = {'rolls': {}}
         for k, v in self.memorizer.storage.items():
             if 'metadata' in v:
-                stored[k] = v['metadata']
+                stored['rolls'][k] = v['metadata']
         return {**self._metadata, **stored}
 
     @property
@@ -219,6 +230,56 @@ class ElectoralRoll(PDFProcessorMixin):
     @property
     def exporter(self):
         return self._exporter
+
+    @property
+    def to_dataframe(self):
+        '''
+        '''
+        if not self.runned:
+            raise UserWarning('You need to run the application before '
+                              'converting the result to pandas dataframe.')
+        return pd.DataFrame(np.array(self.entries), columns=self.fields)
+
+    @property
+    def source(self):
+        '''
+        Directory(ies) or file(s) to search for valid electoral rolls.
+        '''
+        return self._source
+
+    @source.setter
+    def source(self, source):
+        paths = []
+        if isinstance(source, str):
+            paths.append(source)
+        elif isinstance(source, list):
+            paths += source
+        else:
+            raise TypeError('source param must be string or list.')
+        files = []
+        for path in paths:
+            if isinstance(path, str) and pdf_utils.is_valid_pdf(path):
+                files += [path]
+            elif isinstance(path, str) and Path(path).is_dir():
+                files += self.printer.init_search(
+                    pdf_utils.get_all_pdf_in_path, [path, self.recursive])
+        if not files:
+            raise TypeError('Source doesnt have valid PDF files.')
+        self._source += files
+        meta_files = pdf_utils.get_metadata_from_pdfs(files)
+        self.printer.init_founded(meta_files)
+        for file in meta_files:
+            meta_files[file]['durations'] = DURATIONS_SCHEMA
+        self._metadata['files'].update(meta_files)
+
+    @property
+    def recursive(self):
+        '''
+        Property that determines if the search for pdf files in the \
+        delivered source is recursive or is only for the root of the \
+        indicated directory,
+        '''
+        return self._recursive
 
     # Shortcut properties
     @property
@@ -261,12 +322,6 @@ class ElectoralRoll(PDFProcessorMixin):
         '''Property that stores the errors of the analysis.'''
         return self.memorizer.errors
 
-    @property
-    def to_dataframe(self):
-        '''
-        '''
-        return pd.DataFrame(np.array(self.entries), columns=self.fields)
-
     # Constructor
     # ------------
     def __init__(self, source, auto=False, *args, **kwargs):
@@ -276,32 +331,15 @@ class ElectoralRoll(PDFProcessorMixin):
         self._printer = self.printer_class(**kwargs)  # load printer
         self._memorizer = self.memorizer_class(**kwargs)  # load memorizer
         self._exporter = self.exporter_class(**kwargs)  # load exporter
-        self._metadata = {}
+        self._metadata = {'files': {}}
         self._runned = False
-        recursively = bool(kwargs.get('recursively', False))
-        files = []
-        if pdf_utils.is_valid_pdf(str(source)):
-            files += [source]
-        elif Path(str(source)).is_dir():
-            files += self.printer.init_search(
-                pdf_utils.get_all_pdf_in_path, [source, recursively])
-        if not files:
-            raise TypeError('Source doesnt have valid PDF files.')
-        files = pdf_utils.get_metadata_from_pdfs(files)
-        self.printer.init_founded(files)
-        durations_schema = {
-                'processing': timedelta(),
-                'adapting': timedelta(),
-                'parsing': timedelta(),
-                'memorizing': timedelta(),
-                'exporting': timedelta()}
-        for file in files:
-            files[file]['durations'] = durations_schema
-        self._metadata['files'] = files
+        self._recursive = bool(kwargs.get('recursive', False))
+        self._source = []
+        self.source = source
         self._metadata['analysis'] = {
             'started': None,
             'finalized': None,
-            'durations': durations_schema}
+            'durations': DURATIONS_SCHEMA}
         if auto:
             self.printer.init_auto()
             self.run()
