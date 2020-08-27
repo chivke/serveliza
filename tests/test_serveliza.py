@@ -5,7 +5,7 @@
 
 import unittest
 
-from serveliza import serveliza
+# from serveliza import serveliza
 
 
 class TestServeliza(unittest.TestCase):
