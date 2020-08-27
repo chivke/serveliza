@@ -169,7 +169,8 @@ class RollPrinter(ColorMixin):
             msg += '\nExported to:'
             for path in metadata['exported_to']:
                 msg += self.ok(f'\n > {path}')
-        msg += self.info(f'\n\nAnalysis of {str(files_num)} files finished.')+'\n'
+        msg += self.info(
+            f'\n\nAnalysis of {str(files_num)} files finished.')+'\n'
         msg += self.lead(f'At {str(finalized)[:-7]}.')
         msg += '\n'+self.warn('Duration: ')+f'{str(duration)[:-7]}'
         msg += self.lead(

@@ -15,8 +15,9 @@ class PdftotextAdapterMixin:
             raise ValueError('Unexpected type of sheet.')
         if len(sheet) > 100000:
             # indicate the pdf file is noised.
-            raise RollNoisedError('pdftotext processor cant process a noised roll. '
-                                  'Try with the pdfminer processor.')
+            raise RollNoisedError(
+                'pdftotext processor cant process a noised roll. '
+                'Try with the pdfminer processor.')
         return sheet
 
 

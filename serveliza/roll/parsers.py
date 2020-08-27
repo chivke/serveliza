@@ -240,7 +240,6 @@ class SheetRollParser:
         if header['commune'] in fixture:
             self._circuns = fixture[header['commune']]
         else:
-            import pdb; pdb.set_trace()
             self._circuns = None
             self._errors.append({
                 'code': 'commune-not-in-fixture',
@@ -471,7 +470,6 @@ class SheetRollParser:
 
     def __init__(self, sheet, auto=True, more_fields=True, *args, **kwargs):
         if not isinstance(sheet, str) or not sheet:
-            import pdb; pdb.set_trace()
             raise TypeError('\'sheet\' arg must be string')
         self._more_fields = bool(more_fields)
         self.__launch_props()

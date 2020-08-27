@@ -94,8 +94,9 @@ class RollExporter:
     def mode(self):
         '''
         'Determines the data export mode in files. If it is "unified" \
-        (default) it creates a single csv file with the data, or if it is "separated" \
-        into several according to communal or regional criteria.'
+        (default) it creates a single csv file with the data, or if it \
+        is "separated" into several according to communal or \
+        regional criteria.'
         '''
         return self._mode
 

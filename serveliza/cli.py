@@ -37,10 +37,10 @@ def roll_cli_wrapper(args, parser):
         'no_summary': args.no_summary,
         'silent': args.silent,
         'no_colors': args.no_colors}
-    #try:
-    serveliza.roll_from_pdf_to_csv(**kwargs)
-    #except TypeError as error:
-    #    print(f'Error! > {error}')
+    try:
+        serveliza.roll_from_pdf_to_csv(**kwargs)
+    except TypeError as error:
+        print(f'Error! > {error}')
 
 
 def roll_parser(subparser):

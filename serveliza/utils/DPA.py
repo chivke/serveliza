@@ -63,7 +63,7 @@ def get_communes_circuns(url=None, verbose=False, export_json=False):
             print(f'''url: {url}''')
             return None
         if verbose:
-            print(f'''xls file is downloaded''')
+            print('''xls file is downloaded''')
         if KEY_CIR2 in doc:
             key_cir = KEY_CIR2
         else:
