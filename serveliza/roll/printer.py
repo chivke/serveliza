@@ -87,7 +87,7 @@ class RollPrinter(ColorMixin):
                         f' in {str(len(files))} pdf files')+'\n'
         msg += self.lead(f'At {str(started)[:-7]}.')+'\n'
         msg += self.info('Each file will be processed, adapted, '
-                         'analyzed, serialized and exported in a '
+                         'analyzed, memorized and exported in a '
                          'single cycle for better performance. '
                          'It will start with the smallest files.')+'\n'
         print(msg)
@@ -160,7 +160,8 @@ class RollPrinter(ColorMixin):
             provinces = ','.join(pro) if len(pro) < 3 else str(len(pro))
             communes = ','.join(com) if len(com) < 3 else str(len(com))
             msg += self.info('Roll: ')+f'{roll["roll"]}.\n'
-            msg += self.info('Entries: ')+self.ok(ent['total'])+'\t'
+            msg += self.info('Entries: ')+self.ok(
+                f"{ent['total']:_}".replace('_', '.'))+'\t'
             msg += self.info('Errors: ')+self.error(ent['errors'])+'\n'
             msg += self.info('Region(s): ')+regions+'.\n'
             msg += self.info('Province(s): ')+provinces+'.\n'
