@@ -1,5 +1,5 @@
-tqdm==4.48.2
 pdftotext==2.1.4
 pandas==1.0.5
 python-slugify==4.0.1
 pdfminer.six==20200726
+pyyaml==5.3.1
