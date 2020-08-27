@@ -50,13 +50,12 @@ class PDFProcessorMixin(*PROCESSORS):
     @property
     def processor(self):
         '''
+        Processor (library) to extract text from pdf file.
         '''
         return self._processor
 
     @processor.setter
     def processor(self, value):
-        '''
-        '''
         if value in self.processor_ref:
             self._processor = value
             self._process_pdf = getattr(self, 'processor_'+value)
