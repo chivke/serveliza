@@ -60,24 +60,29 @@ Get Started!
 Ready to contribute? Here's how to set up `serveliza` for local development.
 
 1. Fork the `serveliza` repo on GitHub.
-2. Clone your fork locally::
+2. Install system requirements to use `pdftotext <https://github.com/jalan/pdftotext>`::
+
+    $ sudo apt install build-essential libpoppler-cpp-dev pkg-config python3-dev
+
+3. Clone your fork locally::
 
     $ git clone git@github.com:your_name_here/serveliza.git
 
-3. Create a virtualenv in to your local copy. Assuming you have python3-venv installed, this is how you set up your fork for local development::
+4. Create a virtualenv in to your local copy. Assuming you have python3-venv installed, this is how you set up your fork for local development::
 
     $ cd serveliza/
     $ python3 -m venv venv
     $ source venv/bin/activate
+    $ pip install -r requirements_dev.txt
     $ python setup.py develop
 
-4. Create a branch for local development::
+5. Create a branch for local development::
 
     $ git checkout -b name-of-your-bugfix-or-feature
 
    Now you can make your changes locally.
 
-5. When you're done making changes, check that your changes pass flake8 and the
+6. When you're done making changes, check that your changes pass flake8 and the
    tests, including testing other Python versions with tox::
 
     $ flake8 serveliza tests
@@ -112,8 +117,7 @@ Tips
 
 To run a subset of tests::
 
-
-    $ python -m unittest tests.test_serveliza
+    $ python -m unittest tests.test_roll
 
 Deploying
 ---------
