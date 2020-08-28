@@ -1,12 +1,3 @@
-'''
-PDF Mixins
-------------
-
-:mod:`serveliza.mixins.pdf`
-
-Mixins to handling PDF files.
-'''
-
 # builtin libraries
 import sys
 

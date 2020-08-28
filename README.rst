@@ -1,5 +1,5 @@
 =========
-serveliza
+Serveliza
 =========
 
 
@@ -30,17 +30,23 @@ Quick start
 Features
 --------
 
-* It analyzes, extracts and exports data from the electoral roll, having as a source the public pdf files distributed by SERVEL.
+* It analyzes, extracts and exports data from the **electoral roll**, having as a source the public pdf files distributed by SERVEL.
 
-.. image:: https://github.com/chivke/serveliza/raw/master/images/readme-roll.gif
-        :alt: Electoral roll example gif
+  |Roll|
+
+  *Added in the first release (0.1.0.)*
 
 Documentation
 --------------
 
-Full documentation in `readthedocs <https://serveliza.readthedocs.io>`.
+Full documentation in `readthedocs <https://serveliza.readthedocs.io>`_.
 
 License
 --------
 
-Free software: GNU General Public License v3
+GNU General Public License v3
+
+.. |Roll| image:: https://github.com/chivke/serveliza/raw/master/images/readme-roll.gif
+    :align: middle
+    :alt: Electoral roll example gif
+
