@@ -68,13 +68,16 @@ Ready to contribute? Here's how to set up `serveliza` for local development.
 
     $ git clone git@github.com:your_name_here/serveliza.git
 
-4. Create a virtualenv in to your local copy. Assuming you have python3-venv installed, this is how you set up your fork for local development::
+4. Create a virtualenv in to your local copy. Assuming you have python3-venv installed, this is how you set up your fork for local development
+::
 
     $ cd serveliza/
     $ python3 -m venv venv
     $ source venv/bin/activate
     $ pip install -r requirements_dev.txt
     $ python setup.py develop
+    $ cd docs/
+    $ make html 
 
 5. Create a branch for local development::
 
@@ -91,13 +94,21 @@ Ready to contribute? Here's how to set up `serveliza` for local development.
 
    To get flake8 and tox, just pip install them into your virtualenv.
 
-6. Commit your changes and push your branch to GitHub::
+7. If you made changes that affect the documentation, it is necessary to update 
+   the pot files for internationalization 
+::
+
+    $ cd docs/
+    $ make gettext
+    $ sphinx-intl update -p _build/gettext/ -l es
+
+8. Commit your changes and push your branch to GitHub::
 
     $ git add .
     $ git commit -m "Your detailed description of your changes."
     $ git push origin name-of-your-bugfix-or-feature
 
-7. Submit a pull request through the GitHub website.
+9. Submit a pull request through the GitHub website.
 
 Pull Request Guidelines
 -----------------------
