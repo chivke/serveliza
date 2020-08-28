@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: serveliza 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-27 20:16-0400\n"
+"POT-Creation-Date: 2020-08-28 17:49-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -151,77 +151,82 @@ msgid ""
 " installed, this is how you set up your fork for local development::"
 msgstr ""
 
-#: ../../../CONTRIBUTING.rst:79
+#: ../../../CONTRIBUTING.rst:80
 msgid "Create a branch for local development::"
 msgstr ""
 
-#: ../../../CONTRIBUTING.rst:83
+#: ../../../CONTRIBUTING.rst:84
 msgid "Now you can make your changes locally."
 msgstr ""
 
-#: ../../../CONTRIBUTING.rst:85
+#: ../../../CONTRIBUTING.rst:86
 msgid ""
 "When you're done making changes, check that your changes pass flake8 and "
 "the tests, including testing other Python versions with tox::"
 msgstr ""
 
-#: ../../../CONTRIBUTING.rst:92
-msgid "To get flake8 and tox, just pip install them into your virtualenv."
+#: ../../../CONTRIBUTING.rst:91
+msgid ""
+"If you made changes that affect the documentation, it is necessary to "
+"update the pot files for internationalization::"
 msgstr ""
 
-#: ../../../CONTRIBUTING.rst:94
+#: ../../../CONTRIBUTING.rst:98
 msgid "Commit your changes and push your branch to GitHub::"
 msgstr ""
 
-#: ../../../CONTRIBUTING.rst:100
+#: ../../../CONTRIBUTING.rst:104
 msgid "Submit a pull request through the GitHub website."
 msgstr ""
 
-#: ../../../CONTRIBUTING.rst:103
+#: ../../../CONTRIBUTING.rst:107
 msgid "Pull Request Guidelines"
 msgstr ""
 
-#: ../../../CONTRIBUTING.rst:105
+#: ../../../CONTRIBUTING.rst:109
 msgid "Before you submit a pull request, check that it meets these guidelines:"
 msgstr ""
 
-#: ../../../CONTRIBUTING.rst:107
+#: ../../../CONTRIBUTING.rst:111
 msgid "The pull request should include tests."
 msgstr ""
 
-#: ../../../CONTRIBUTING.rst:108
+#: ../../../CONTRIBUTING.rst:112
 msgid ""
 "If the pull request adds functionality, the docs should be updated. Put "
 "your new functionality into a function with a docstring, and add the "
 "feature to the list in README.rst."
 msgstr ""
 
-#: ../../../CONTRIBUTING.rst:111
+#: ../../../CONTRIBUTING.rst:115
 msgid ""
 "The pull request should work for Python 3.5, 3.6, 3.7 and 3.8, and for "
 "PyPy. Check https://travis-ci.com/chivke/serveliza/pull_requests and make"
 " sure that the tests pass for all supported Python versions."
 msgstr ""
 
-#: ../../../CONTRIBUTING.rst:116
+#: ../../../CONTRIBUTING.rst:120
 msgid "Tips"
 msgstr ""
 
-#: ../../../CONTRIBUTING.rst:118
+#: ../../../CONTRIBUTING.rst:122
 msgid "To run a subset of tests::"
 msgstr ""
 
-#: ../../../CONTRIBUTING.rst:123
+#: ../../../CONTRIBUTING.rst:127
 msgid "Deploying"
 msgstr ""
 
-#: ../../../CONTRIBUTING.rst:125
+#: ../../../CONTRIBUTING.rst:129
 msgid ""
 "A reminder for the maintainers on how to deploy. Make sure all your "
 "changes are committed (including an entry in HISTORY.rst). Then run::"
 msgstr ""
 
-#: ../../../CONTRIBUTING.rst:133
+#: ../../../CONTRIBUTING.rst:137
 msgid "Travis will then deploy to PyPI if tests pass."
 msgstr ""
+
+#~ msgid "To get flake8 and tox, just pip install them into your virtualenv."
+#~ msgstr ""
 

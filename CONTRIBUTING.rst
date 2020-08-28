@@ -75,8 +75,7 @@ Ready to contribute? Here's how to set up `serveliza` for local development.
     $ source venv/bin/activate
     $ pip install -r requirements_dev.txt
     $ python setup.py develop
-    $ cd docs/
-    $ make html 
+    $ cd docs ; make html ; cd ..
 
 5. Create a branch for local development::
 
@@ -87,11 +86,7 @@ Ready to contribute? Here's how to set up `serveliza` for local development.
 6. When you're done making changes, check that your changes pass flake8 and the
    tests, including testing other Python versions with tox::
 
-    $ flake8 serveliza tests
-    $ python setup.py test or pytest
     $ tox
-
-   To get flake8 and tox, just pip install them into your virtualenv.
 
 7. If you made changes that affect the documentation, it is necessary to update 
    the pot files for internationalization::
