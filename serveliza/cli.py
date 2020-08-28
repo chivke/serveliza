@@ -6,8 +6,7 @@ from serveliza.roll.exporter import RollExporter
 from serveliza.roll import ElectoralRoll
 from serveliza import serveliza
 
-DESC = f'Release {__version__}. ' \
-       'Serveliza is an application to extract data from ' \
+DESC = 'Serveliza is an application to extract data of ' \
        'the Chilean Electoral Service (SERVEL) from different ' \
        'sources.'
 
@@ -86,6 +85,10 @@ def main():
     '''Console script for serveliza.'''
     parser = argparse.ArgumentParser(
         prog='serveliza', description=DESC, epilog=EPILOG)
+    # version
+    parser.add_argument(
+        '-v', '--version', action='version',
+        version="%(prog)s "+__version__)
     subparser = parser.add_subparsers(
         title='sub-commands', description=DESC_SUBCMDS, help='description:')
     # roll subcommand parser:
