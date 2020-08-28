@@ -15,23 +15,32 @@ serveliza
 
 
 
+Serveliza is an application to extract data of the Chilean Electoral Service (SERVEL) from different open sources.
 
-Serveliza description
+A first step to democratize data is to make it accessible for free use.
 
+Quick start
+------------
 
-* Free software: GNU General Public License v3
-* Documentation: https://serveliza.readthedocs.io.
+.. code-block:: console
 
+    $ pip install serveliza
+    $ serveliza -h
 
 Features
 --------
 
-* TODO
+* It analyzes, extracts and exports data from the electoral roll, having as a source the public pdf files distributed by SERVEL.
 
-Credits
--------
+.. image:: https://github.com/chivke/serveliza/raw/master/images/readme-roll.gif
+        :alt: Electoral roll example gif
 
-This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
+Documentation
+--------------
 
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+Full documentation in `readthedocs <https://serveliza.readthedocs.io>`.
+
+License
+--------
+
+Free software: GNU General Public License v3
