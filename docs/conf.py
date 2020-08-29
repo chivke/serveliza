@@ -67,7 +67,7 @@ release = serveliza.__version__
 # make gettext
 # sphinx-intl update -p _build/gettext/ -l es
 
-language = None
+language = ['en', 'es']
 locale_dirs = ['locale/']
 gettext_compact = False
 
