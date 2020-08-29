@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: serveliza 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-27 00:53-0400\n"
+"POT-Creation-Date: 2020-08-29 02:11-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,6 +22,64 @@ msgid "Usage"
 msgstr ""
 
 #: ../../usage.rst:5
-msgid "To use serveliza in a project::"
+msgid "Serveliza can be used in different ways."
 msgstr ""
+
+#: ../../usage.rst:8
+msgid "Command line usage"
+msgstr ""
+
+#: ../../usage.rst:10
+msgid "|Intro|"
+msgstr ""
+
+#: ../../usage.rst:12
+msgid "If you run from the command line you can access help on its use."
+msgstr ""
+
+#: ../../usage.rst:37
+msgid "As well as each of the available subcommands."
+msgstr ""
+
+#: ../../usage.rst:83
+msgid "Programmatic usage"
+msgstr ""
+
+#: ../../usage.rst:85
+msgid ""
+"You can use the serveliza components by importing from their sub-packages"
+" as :py:mod:`serveliza.roll`, :py:mod:`serveliza.utils` or "
+":py:mod:`serveliza.mixins`."
+msgstr ""
+
+#: ../../usage.rst:87
+msgid ""
+"For example, you can import the main class that works with electoral "
+"rolls."
+msgstr ""
+
+#: ../../usage.rst:93
+msgid ""
+"It can also be imported in abbreviated form defined in the "
+"``__init__.py`` file."
+msgstr ""
+
+#: ../../usage.rst:99
+msgid ""
+"Inside serveliza, the module of the same name defines functions as "
+"shortcuts for specific actions, instantiating the classes in a "
+"transparent way. The command line interface is powered by these "
+"functions."
+msgstr ""
+
+#: ../../usage.rst:101
+msgid "For example, you can get a pandas dataframe object through a function:"
+msgstr ""
+
+#: ../../usage.rst:108
+msgid "That otherwise it would be like this:"
+msgstr ""
+
+#~ msgid "To use serveliza in a project::"
+#~ msgstr ""
 

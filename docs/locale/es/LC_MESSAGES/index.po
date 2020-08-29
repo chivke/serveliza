@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: serveliza 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-27 00:53-0400\n"
+"POT-Creation-Date: 2020-08-29 02:11-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,26 +18,71 @@ msgstr ""
 "Generated-By: Babel 2.8.0\n"
 
 #: ../../index.rst:2
-msgid "Welcome to serveliza's documentation!"
-msgstr ""
-
-#: ../../index.rst:4
-msgid "Contents:"
-msgstr ""
-
-#: ../../index.rst:17
-msgid "Indices and tables"
+msgid "Serveliza's documentation"
 msgstr ""
 
 #: ../../index.rst:18
-msgid ":ref:`genindex`"
-msgstr ""
-
-#: ../../index.rst:19
-msgid ":ref:`modindex`"
+msgid "|Intro|"
 msgstr ""
 
 #: ../../index.rst:20
+msgid ""
+"Serveliza is an application to extract data of the Chilean Electoral "
+"Service (SERVEL) from different open sources."
+msgstr ""
+
+#: ../../index.rst:22
+msgid "A first step to democratize data is to make it accessible for free use."
+msgstr ""
+
+#: ../../index.rst:26
+msgid "Quick start"
+msgstr ""
+
+#: ../../index.rst:34
+msgid "Features"
+msgstr ""
+
+#: ../../index.rst:36
+msgid ""
+"It analyzes, extracts and exports data from the **electoral roll**, "
+"having as a source the public pdf files distributed by SERVEL."
+msgstr ""
+
+#: ../../index.rst:38
+msgid "|Roll|"
+msgstr ""
+
+#: ../../index.rst:40
+msgid "*Added in the first release (0.1.0.)*"
+msgstr ""
+
+#: ../../index.rst:43
+msgid "Contents"
+msgstr ""
+
+#: ../../index.rst:56
+msgid "Index's"
+msgstr ""
+
+#: ../../index.rst:58
+msgid ":ref:`genindex`"
+msgstr ""
+
+#: ../../index.rst:59
+msgid ":ref:`modindex`"
+msgstr ""
+
+#: ../../index.rst:60
 msgid ":ref:`search`"
 msgstr ""
+
+#~ msgid "Welcome to serveliza's documentation!"
+#~ msgstr ""
+
+#~ msgid "Contents:"
+#~ msgstr ""
+
+#~ msgid "Indices and tables"
+#~ msgstr ""
 

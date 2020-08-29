@@ -1,12 +1,3 @@
-'''
-roll parsers
------------------
-
-:mod:`serveliza.roll.parsers`
-
-Contains parser class for electoral roll.
-'''
-
 # builtin libraries
 import os
 import re

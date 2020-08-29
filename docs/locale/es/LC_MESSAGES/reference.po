@@ -1,0 +1,465 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, chivke
+# This file is distributed under the same license as the serveliza package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: serveliza 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-08-29 02:11-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../reference.rst:2
+msgid "API Reference"
+msgstr ""
+
+#: ../../reference.rst:5
+msgid "Electoral Roll"
+msgstr ""
+
+#: ../../reference.rst:7
+msgid "|Roll|"
+msgstr ""
+
+#: ../../reference.rst:10
+msgid "Main class"
+msgstr ""
+
+#: ../../reference.rst:12
+msgid ":mod:`serveliza.roll.roll`"
+msgstr ""
+
+#: ../../reference.rst:15
+msgid "Sub-components"
+msgstr ""
+
+#: ../../reference.rst:17
+msgid ":mod:`serveliza.roll.adapters`"
+msgstr ""
+
+#: ../../reference.rst:18
+msgid ":mod:`serveliza.roll.parsers`"
+msgstr ""
+
+#: ../../reference.rst:19
+msgid ":mod:`serveliza.roll.memorizer`"
+msgstr ""
+
+#: ../../reference.rst:20
+msgid ":mod:`serveliza.roll.exporter`"
+msgstr ""
+
+#: ../../reference.rst:21
+msgid ":mod:`serveliza.roll.printer`"
+msgstr ""
+
+#: of serveliza.roll.roll.ElectoralRoll:1
+msgid ""
+":class:`ElectoralRoll <.ElectoralRoll>` allows to     instantiate an "
+"electoral register of the chilean Electoral Service     (Servicio "
+"Electoral de Chile, SERVEL) from PDF files."
+msgstr ""
+
+#: of serveliza.roll.roll.ElectoralRoll:3
+msgid ""
+"The path of the directory or file to be used as the data source must     "
+"be specified through the \"source\" parameter when instantiating the     "
+"object. The \"verbose\" parameter determines if the progress and the     "
+"result will be printed on the screen or will be kept silent, it accepts"
+"     only Boolean values. Both characteristics are inherited from     "
+":class:`DirFilePDFMixin <.DirFilePDFMixin>` class."
+msgstr ""
+
+#: of serveliza.roll.roll.ElectoralRoll:5
+msgid ""
+"The :meth:`run <.ElectoralRoll.run>` method starts the analysis     "
+"process of the text extracted from each sheet of the files. A parser     "
+"(:class:`SheetRegisterParser <.SheetRegisterParser>`) will be iterated"
+"     over each sheet, which will be instantiated from the class defined "
+"in     the class attribute :attr:`parser_class "
+"<.ElectoralRoll.parser_class`     and called through the "
+":meth:`parse_sheet <.ElectoralRoll.parse_sheet>` method. Each resulting "
+"object will be sent to the :meth:`serialize_sheet     "
+"<.ElectoralRoll.serialize_sheet>` method that will store the result     "
+"in the :attr:`storage <.ElectoralRoll.storage>` property, and then     "
+"generate a partial export ( with the :meth:`export_sheet     "
+"<.ElectoralRoll.export_sheet` method) if so specified."
+msgstr ""
+
+#: of serveliza.roll.roll.ElectoralRoll:8
+msgid ""
+"Setting the parameter \"auto\" to true in the constructor will     "
+"automatically start the :meth:`run <.ElectoralRoll.run>` method."
+msgstr ""
+
+#: of serveliza.roll.roll.ElectoralRoll.entries:1
+msgid "Property that accesses the data entries of the electoral roll analyzed."
+msgstr ""
+
+#: of serveliza.roll.roll.ElectoralRoll.errors:1
+msgid "Property that stores the errors of the analysis."
+msgstr ""
+
+#: of serveliza.roll.roll.ElectoralRoll.fields:1
+msgid "Property that returns the fields of the electoral roll analyzed."
+msgstr ""
+
+#: of serveliza.roll.roll.ElectoralRoll.metadata:1
+msgid ""
+"Property that stores the analysis metadata. It integrates the metadata of"
+" each electoral register detected         in the analysis."
+msgstr ""
+
+#: of serveliza.roll.roll.ElectoralRoll.parse_sheet:1
+msgid ""
+"Method that calls the class defined in the :attr:`parser_class         "
+"<.ElectoralRoll.parser_class>` class attribute, initializing it         "
+"with the sheet argument."
+msgstr ""
+
+#: of serveliza.roll.roll.ElectoralRoll.printer:1
+msgid "Property to call the RollPrinter object instanciated in constructor."
+msgstr ""
+
+#: of serveliza.roll.roll.ElectoralRoll.recursive:1
+msgid ""
+"Property that determines if the search for pdf files in the         "
+"delivered source is recursive or is only for the root of the         "
+"indicated directory,"
+msgstr ""
+
+#: of serveliza.roll.roll.ElectoralRoll.rid:1
+msgid ""
+"Property that returns the identifier of the electoral roll analyzed. If "
+"it will return only the first identifier detected, this should         "
+"not cause inconvenience unless pdf files from different electoral"
+"         rolls are loaded."
+msgstr ""
+
+#: of serveliza.roll.roll.ElectoralRoll.run:1
+msgid ""
+"Method that starts the analysis of the pdf files loaded in the         "
+":attr:`sheets <.ElectoralRoll.sheets>` property. Iterate in each         "
+"one of them by running the :meth:`parse_sheet         "
+"<.ElectoralRoll.parse_sheet>` and :meth:`serializer_sheet         "
+"<.ElectoralRoll.serializer_sheet>` methods."
+msgstr ""
+
+#: of serveliza.roll.roll.ElectoralRoll.run:3
+msgid ""
+"Record in the :attr:`metadata <.ElectoralRoll.metadata>` property"
+"         in the *analysis* key the duration of the parsing and "
+"serialization,         as well as when it started and ended."
+msgstr ""
+
+#: of serveliza.roll.roll.ElectoralRoll.runned:1
+msgid ""
+"Boolean property that indicates whether the instance has executed the"
+"         :meth:`run <.ElectoralRoll.run>` method or not."
+msgstr ""
+
+#: of serveliza.roll.roll.ElectoralRoll.source:1
+msgid "Directory(ies) or file(s) to search for valid electoral rolls."
+msgstr ""
+
+#: ../../reference.rst:32
+msgid "Roll adapters"
+msgstr ""
+
+#: ../../reference.rst:38
+msgid "Roll parsers"
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser:1
+msgid "Parser is intended to be instantiated by each sheet."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser:3
+msgid ""
+"Class attributes beginning with \"*regex_*\" correspond to the regular"
+"     expressions used to detect fields in the header. The "
+"*regexs_entries*     class attribute contains a dictionary with the "
+"regular expressions     for the fields in each record and a key name for "
+"each. Finally, the     *dpa_fixture_path* class attribute defines the "
+"path of the .json file     that contains a compressed dictionary with "
+"communes and constituencies."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser.circuns:1
+msgid ""
+"Property that contains the possible electoral circunscriptions         "
+"within the commune defined in the :attr:`header         "
+"<.SheetRollParser.header>` property. It will return None if         the "
+":meth:`parse_header <.SheetRollParser.parse_header>`         method has "
+"not been executed."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser.decompose:1
+msgid ""
+"Method that descompose a :attr:`sheet <.SheetRollParser.sheet>`         "
+"of the electoral roll in a text string into a list with each line."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser.decomposed:1
+msgid ""
+"Property that indicates whether the '*sheet*' property is decomposed"
+"         into a list of lines or not."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser.entries:1
+msgid ""
+"Property containing a list of entries from the electoral roll         "
+"sheet. Each entry corresponds to a list of data in the order of the"
+"         fields defined in the :attr:`fields <SheetRollParser.fields>`"
+"         property."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser.errors:1
+msgid ""
+"Property contains a list with the errors found in the sheet analysis."
+"         Each error corresponds to a dictionary with at least two keys:"
+"         '*code*' with a semantic slug text of the error and '*target*' "
+"that         contains what generated the error."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser.fields:1
+msgid ""
+"Property that contains the fields of the electoral roll         detected "
+"in the sheet through the :meth:`parse_fields         "
+"<.SheetRollParser.parse_fields` method."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser.fields_index:1
+msgid ""
+"Property that contains the index where the fields are located in the"
+"         decomposed sheet as a list."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser.header:1
+msgid ""
+"Property that contains the result of method :meth:`parse_header         "
+"<.SheetRollParser.parse_header>`. It consists of a         dictionary "
+"with the data from the header of the electoral roll sheet."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser.metadata:1
+msgid ""
+"Property contains the metadata extracted during the parser analysis"
+"         of the electoral roll sheet. The metadata is stored as a "
+"dictionary, the '*rid*' key         corresponding to the unique "
+"identifier of the voter registry of the         sheet, the '*times*' key "
+"stores how long the analysis took (in         total, during header, "
+"fields and entries), the '*entries*' key         contains the total "
+"number of entries extracted , the amount of         rescued and errors. "
+"Finally, the NULLS key contains the total         number of null data "
+"inside each row or entry, as well as the detail         of the fields, if"
+" there is any."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser.parse_entries:1
+msgid ""
+"Method that analyzes and extracts each data entry from the voter         "
+"registration sheet."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser.parse_entries:3
+msgid ""
+"First determine if each line of text is well composed, that is,         "
+"it begins with at least one letter and ends with a number or a space"
+"         next to a single letter. Then each line of text is analyzed as "
+"if it         were an input through the :meth:`parse_entry         "
+"<.SheetRollParser.parse_entry>` method."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser.parse_entries:5
+msgid ""
+"Afterwards, the lines considered malformed are internally processed,"
+"         joining them in relation to whether they start with a letter or "
+"a         space. Then use the :meth:`parse_entry         "
+"<.SheetRollParser.parse_entry>` method again for each of them.         "
+"Those that are rescued will remain in the :attr:`metadata         "
+"<.SheetRollParser.metadata>` property in the keys *entires* >         "
+"*rescue*."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser.parse_entry:1
+msgid ""
+"A method that extracts the data from a voter registry entry in text"
+"         line format."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser.parse_entry:3
+msgid ""
+"Finds the fields found by regular expressions that are stored in the"
+"         class attribute: attr: `regexs_entries         "
+"<.SheetRollParser.regexs_entries>`."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser.parse_entry:5
+msgid ""
+"Then it looks for the district from a list according to its commune"
+"         and in relation to this it determines the place of the electoral"
+"         domicile."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser.parse_fields:1
+msgid ""
+"Method to analyze and extract the fields of the electoral roll.         "
+"The direct fields of the sheet (*nombre*, *c-identidad*, *sex|o*,"
+"         *domicilio-electoral*, *circunscripcion* y *mesa*) are taken and"
+"         commune, province and region (*comuna*, *provincia*, *region*) "
+"are         added. Result is stored in the :attr:`fields         "
+"<SheetRollParser.fields>` property, the method returns nothing."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser.parse_header:1
+msgid ""
+"Method that parses the head of the sheet and extracts the data         "
+"from *roll*, *election*, *year*, *region*, *province* and         "
+"*commune* to store it in the :attr:`header         "
+"<.SheetRollParser.header>` property."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser.parse_header:3
+msgid ""
+"It also builds a unique identifier of the electoral roll that         it "
+"stores in the :attr:`metadata <.SheetRollParser.metadata>`         "
+"property with the *rid* key."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser.run:1
+msgid ""
+"Method that starts the voter registry sheet analyzer by executing"
+"         methods :meth:`decompose <.SheetRollParser.decompose>`,         "
+":meth:`parse_header <.SheetRollParser.parse_header>` and         "
+":meth:`parse_fields <.SheetRollParser.parse_fields>` sequentially."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser.run:3
+msgid ""
+"It measures the duration times of each method executed and saves         "
+"them in the :attr:`metadata[times] <.SheetRollParser.metadata>`         "
+"property."
+msgstr ""
+
+#: of serveliza.roll.parsers.SheetRollParser.sheet:1
+msgid ""
+"Property that contains a text string of the entire sheet to parse or"
+"         the list of text lines if it is decomposed."
+msgstr ""
+
+#: ../../reference.rst:44
+msgid "Roll memorizer"
+msgstr ""
+
+#: ../../reference.rst:50
+msgid "Roll exporter"
+msgstr ""
+
+#: of serveliza.roll.exporter.RollExporter.mode:1
+msgid ""
+"'Determines the data export mode in files. If it is \"unified\"         "
+"(default) it creates a single csv file with the data, or if it         is"
+" \"separated\" into several according to communal or         regional "
+"criteria.'"
+msgstr ""
+
+#: of serveliza.roll.exporter.RollExporter.mode_sep:1
+msgid "Criteria for separating files in export in separate mode."
+msgstr ""
+
+#: of serveliza.roll.exporter.RollExporter.output:1
+msgid "Directory to store the data in .csv."
+msgstr ""
+
+#: of serveliza.roll.exporter.RollExporter.random_suffix:1
+msgid ""
+"Determines whether exported files have a random         text string "
+"appended to the end."
+msgstr ""
+
+#: of serveliza.roll.exporter.RollExporter.summary:1
+msgid ""
+"Determines whether to generate a summary file of         the export and "
+"the extracted data."
+msgstr ""
+
+#: ../../reference.rst:56
+msgid "Roll printer"
+msgstr ""
+
+#: ../../reference.rst:63
+msgid "Mixins modules"
+msgstr ""
+
+#: ../../reference.rst:65
+msgid ":mod:`serveliza.mixins.pdf`"
+msgstr ""
+
+#: ../../reference.rst:66
+msgid ":mod:`serveliza.mixins.pdf_processors`"
+msgstr ""
+
+#: ../../reference.rst:72
+msgid "PDF processor mixin"
+msgstr ""
+
+#: of serveliza.mixins.pdf.PDFProcessorMixin:1
+msgid ""
+"Mixin that allows an instance the ability to process     PDF files with "
+"certain libraries. In the constructor,     the processor to be used is "
+"defined with the argument     of the same name, binding the "
+":attr:`process_pdf     <.ProcesosrPDFMixin.process_pdf>` property to the"
+"     method related to it."
+msgstr ""
+
+#: of serveliza.mixins.pdf.PDFProcessorMixin:3
+msgid "PDF processor availables:"
+msgstr ""
+
+#: of serveliza.mixins.pdf.PDFProcessorMixin:5
+msgid ""
+"`pdftotext <https://github.com/jalan/pdftotext>`_         (0.1.0 release)"
+" with :meth:`pdftotext_processor         "
+"<.ProcessorPDFMixin.processor_pdftotext>`"
+msgstr ""
+
+#: of serveliza.mixins.pdf.PDFProcessorMixin:6
+msgid ""
+"`pdfminersix <https://pdfminersix.readthedocs.io/>`_         (0.1.0 "
+"release) with :meth:`pdftotext_processor         "
+"<.ProcessorPDFMixin.processor_pdfminersix>`"
+msgstr ""
+
+#: of serveliza.mixins.pdf.PDFProcessorMixin.process_pdf:1
+msgid ""
+"Property that calls the method corresponding to the PDF file         "
+"processor configured in the instance initialization."
+msgstr ""
+
+#: of serveliza.mixins.pdf.PDFProcessorMixin.processor:1
+msgid "Processor (library) to extract text from pdf file."
+msgstr ""
+
+#: ../../reference.rst:77
+msgid "Available PDF processors"
+msgstr ""
+
+#: of serveliza.mixins.pdf_processors.PdftotextMixin.processor_pdftotext:1
+msgid ""
+"Method to use `pdftotext <https://github.com/jalan/pdftotext>`_         "
+"in a file specified in the argument as a path."
+msgstr ""
+
+#: of serveliza.mixins.pdf_processors.PdftotextMixin.processor_pdftotext_page:1
+msgid "pdftotext not need that."
+msgstr ""
+

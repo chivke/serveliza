@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: serveliza 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-27 00:53-0400\n"
+"POT-Creation-Date: 2020-08-29 02:11-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,43 +21,56 @@ msgstr ""
 msgid "Installation"
 msgstr ""
 
-#: ../../installation.rst:9
-msgid "Stable release"
+#: ../../installation.rst:8
+msgid "System requirements"
 msgstr ""
 
-#: ../../installation.rst:11
-msgid "To install serveliza, run this command in your terminal:"
+#: ../../installation.rst:10
+msgid ""
+"Serveliza needs the installation of system requirements due to the use of"
+" the `pdftotext <https://github.com/jalan/pdftotext>`_ package as a text "
+"processor from pdf files."
 msgstr ""
 
 #: ../../installation.rst:17
+msgid "Stable release"
+msgstr ""
+
+#: ../../installation.rst:19
+msgid "To install serveliza, run this command:"
+msgstr ""
+
+#: ../../installation.rst:25
 msgid ""
 "This is the preferred method to install serveliza, as it will always "
 "install the most recent stable release."
 msgstr ""
 
-#: ../../installation.rst:19
-msgid ""
-"If you don't have `pip`_ installed, this `Python installation guide`_ can"
-" guide you through the process."
-msgstr ""
-
-#: ../../installation.rst:27
+#: ../../installation.rst:28
 msgid "From sources"
 msgstr ""
 
-#: ../../installation.rst:29
+#: ../../installation.rst:30
 msgid "The sources for serveliza can be downloaded from the `Github repo`_."
 msgstr ""
 
-#: ../../installation.rst:31
+#: ../../installation.rst:32
 msgid "You can either clone the public repository:"
 msgstr ""
 
-#: ../../installation.rst:37
-msgid "Or download the `tarball`_:"
-msgstr ""
-
-#: ../../installation.rst:43
+#: ../../installation.rst:38
 msgid "Once you have a copy of the source, you can install it with:"
 msgstr ""
+
+#~ msgid "To install serveliza, run this command in your terminal:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If you don't have `pip`_ installed, "
+#~ "this `Python installation guide`_ can "
+#~ "guide you through the process."
+#~ msgstr ""
+
+#~ msgid "Or download the `tarball`_:"
+#~ msgstr ""
 

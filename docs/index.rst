@@ -21,9 +21,6 @@ Serveliza is an application to extract data of the Chilean Electoral Service (SE
 
 A first step to democratize data is to make it accessible for free use.
 
-+---------------+---------------+-------------+
-|:ref:`genindex`|:ref:`modindex`|:ref:`search`|
-+---------------+---------------+-------------+
 
 Quick start
 ------------
@@ -54,6 +51,13 @@ Contents
    contributing
    authors
    history
+
+Index's
+-------
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
 
 
 .. |Intro| image:: https://github.com/chivke/serveliza/raw/master/images/serveliza_intro.gif
