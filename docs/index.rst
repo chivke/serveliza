@@ -11,6 +11,10 @@ Serveliza's documentation
         :target: https://serveliza.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
+.. image:: https://img.shields.io/badge/License-GPLv3-blue.svg
+        :target: https://www.gnu.org/licenses/gpl-3.0
+        :alt: license badge
+
 |Intro|
 
 Serveliza is an application to extract data of the Chilean Electoral Service (SERVEL) from different open sources.
@@ -51,11 +55,12 @@ Contents
    authors
    history
 
-.. |Roll| image:: https://github.com/chivke/serveliza/raw/master/images/readme-roll.gif
-    :align: middle
-    :alt: Electoral roll example gif
 
 .. |Intro| image:: https://github.com/chivke/serveliza/raw/master/images/serveliza_intro.gif
     :align: middle
     :alt: intro to cli
     :width: 80%
+
+.. |Roll| image:: https://github.com/chivke/serveliza/raw/master/images/readme_roll.gif
+    :align: middle
+    :alt: Electoral roll example gif

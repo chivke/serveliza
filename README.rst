@@ -13,6 +13,9 @@ Serveliza
         :target: https://serveliza.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
+.. image:: https://img.shields.io/badge/License-GPLv3-blue.svg
+        :target: https://www.gnu.org/licenses/gpl-3.0
+        alt: license badge
 
 |Intro|
 
@@ -49,11 +52,13 @@ License
 
 GNU General Public License v3
 
-.. |Roll| image:: https://github.com/chivke/serveliza/raw/master/images/readme-roll.gif
-    :align: middle
-    :alt: Electoral roll example gif
 
 .. |Intro| image:: https://github.com/chivke/serveliza/raw/master/images/serveliza_intro.gif
     :align: middle
     :alt: intro to cli
+    :width: 80%
+
+.. |Roll| image:: https://github.com/chivke/serveliza/raw/master/images/readme_roll.gif
+    :align: middle
+    :alt: Electoral roll example gif
     :width: 80%
