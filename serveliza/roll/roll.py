@@ -197,7 +197,7 @@ class ElectoralRoll(PDFProcessorMixin):
     def runned(self):
         '''
         Boolean property that indicates whether the instance has executed the \
-        :mth:`run <.ElectoralRoll.run>`method or not.
+        :meth:`run <.ElectoralRoll.run>` method or not.
         '''
         return self._runned
 
