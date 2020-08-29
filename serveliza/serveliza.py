@@ -19,3 +19,13 @@ def roll_from_pdf_to_csv(
         export=True)
     roll.run()
     return roll.metadata['exported_to']
+
+
+def roll_from_pdf_to_dataframe(
+        source, recursive=False,
+        verbose=False, processor=None):
+    roll = ElectoralRoll(
+        source=source, recursive=recursive,
+        verbose=verbose, processor=None)
+    roll.run()
+    return roll.to_dataframe()
