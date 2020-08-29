@@ -21,7 +21,6 @@ Serveliza is an application to extract data of the Chilean Electoral Service (SE
 
 A first step to democratize data is to make it accessible for free use.
 
-
 Quick start
 ------------
 

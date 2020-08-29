@@ -4,56 +4,54 @@ API Reference
 Electoral Roll
 --------------
 
+.. automodule:: serveliza.roll
+    :members:
+
 |Roll|
+
+Modules
+~~~~~~~
+
+* Main module: :mod:`serveliza.roll.roll`
+* Auxiliary modules:
+    * :mod:`serveliza.roll.adapters`
+    * :mod:`serveliza.roll.parsers`
+    * :mod:`serveliza.roll.memorizer`
+    * :mod:`serveliza.roll.exporter`
+    * :mod:`serveliza.roll.printer`
 
 Main class
 ~~~~~~~~~~
 
-* :mod:`serveliza.roll.roll`
-
-Sub-components
-~~~~~~~~~~~~~~
-
-* :mod:`serveliza.roll.adapters`
-* :mod:`serveliza.roll.parsers`
-* :mod:`serveliza.roll.memorizer`
-* :mod:`serveliza.roll.exporter`
-* :mod:`serveliza.roll.printer`
-
-.. automodule:: serveliza.roll
-    :members:
-
 .. automodule:: serveliza.roll.roll
     :members:
 
-
-
 Roll adapters
--------------
+~~~~~~~~~~~~~
 
 .. automodule:: serveliza.roll.adapters
     :members:
 
 Roll parsers
-------------
+~~~~~~~~~~~~
 
 .. automodule:: serveliza.roll.parsers
     :members:
 
 Roll memorizer
---------------
+~~~~~~~~~~~~~~
 
 .. automodule:: serveliza.roll.memorizer
     :members:
 
 Roll exporter
--------------
+~~~~~~~~~~~~~
 
 .. automodule:: serveliza.roll.exporter
     :members:
 
 Roll printer
-------------
+~~~~~~~~~~~~
 
 .. automodule:: serveliza.roll.printer
     :members:

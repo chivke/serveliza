@@ -19,7 +19,7 @@ msgstr ""
 
 #: ../../index.rst:2
 msgid "Serveliza's documentation"
-msgstr ""
+msgstr "Documentación de Serveliza"
 
 #: ../../index.rst:18
 msgid "|Intro|"
