@@ -61,6 +61,6 @@ Contents
     :alt: intro to cli
     :width: 80%
 
-.. |Roll| image:: https://github.com/chivke/serveliza/raw/master/images/readme_roll.gif
+.. |Roll| image:: https://github.com/chivke/serveliza/raw/master/images/serveliza_roll.gif
     :align: middle
     :alt: Electoral roll example gif
