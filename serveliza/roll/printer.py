@@ -215,7 +215,7 @@ class RollPrinter(ColorMixin):
                 len(obj.errors)) if len(obj.errors) else '0'
             msg += f'[{self.ok(obj.rid)}]'
             msg += f'({entries}/{errors})'
-            msg += f'[{(len(self.metadata["files"]))} files]'
+            msg += f'[{(len(obj.metadata["files"]))} files]'
         msg += '>'
         return msg
 
