@@ -97,7 +97,10 @@ def main():
     # parser_cmd = cmd_parser(subparser)
     # ...
     args = parser.parse_args()
-    args.func(args, parser_roll)
+    if hasattr(args, 'func') and args.func == roll_cli_wrapper:
+        args.func(args, parser_roll)
+    else:
+        parser.print_help()
     return 0
 
 
