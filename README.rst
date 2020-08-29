@@ -14,6 +14,8 @@ Serveliza
         :alt: Documentation Status
 
 
+|Intro|
+
 
 Serveliza is an application to extract data of the Chilean Electoral Service (SERVEL) from different open sources.
 
