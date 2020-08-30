@@ -20,13 +20,11 @@ script: tox
 before_install:
   - sudo apt install build-essential libpoppler-cpp-dev pkg-config python3-dev
 
-#deploy:
-#  provider: pypi
-#  distributions: sdist bdist_wheel
-#  user: chivke
-#  password:
-#    secure: PLEASE_REPLACE_ME
-#  on:
-#    tags: true
-#    repo: chivke/serveliza
-#    python: 3.8
+deploy:
+  provider: pypi
+  distributions: sdist bdist_wheel
+  username: "__token__"
+  password:
+    secure: PLEASE_REPLACE_ME
+  on:
+    tags: true
