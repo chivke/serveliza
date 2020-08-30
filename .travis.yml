@@ -1,30 +1,17 @@
-# Config file for automatic testing at travis-ci.com
-
 language: python
 python:
-  - 3.8
-  - 3.7
-  - 3.6
-
-# Command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
+- 3.8
+- 3.7
+- 3.6
 install: pip install -U tox-travis
-
-# Command to run tests, e.g. python setup.py test
 script: tox
-
-# Assuming you have installed the travis-ci CLI tool, after you
-# create the Github repo and add it to Travis, run the
-# following command to finish PyPI deployment setup:
-# $ travis encrypt --add deploy.password
-
 before_install:
-  - sudo apt install build-essential libpoppler-cpp-dev pkg-config python3-dev
-
+- sudo apt install build-essential libpoppler-cpp-dev pkg-config python3-dev
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
-  username: "__token__"
+  username: __token__
   password:
-    secure: PLEASE_REPLACE_ME
+    secure: vGAi6MqQ8vIjaZAB2i/lwbDz9TdFzTmBTKOGdDwO5rAstjgyjjoKHTPfyZNcSju/lUH9Lli2UULXnfJf2BB86kefWW+WIsRrHJwcl89dvRZVb73/j5EoqWQSMAeztK1QvhK7qxXAvqaMrYeUzNd9k1uJoBkbvOPW6rEB/yE92irXj6RNQjReVWj5Q9SU0RMYPccAGxVL6SQG0V/t3cKCQYTHtzJf0TH8Nt2keUwhx+E0x8FXCkooEKxHq3V6Hkf8twYfeY5u6QGO/IwIE6WqOo939ERWz/EdxqblFKcVsLm84xQwX9LmoNnXpTYrgTPQ546fd/0zYl1MFCbNL1Q7LofbcJouNmJcnrFJO0R7QBjiwWuIbDWlpf1Q3smuuMEztLPiYBicHPuwXeJYd29Nc7g2ldJtCDARn2JbaomBY0DC5P3H4GksuvNP1oxY0b8IkJgbK8Cfn2GuYxLmwx04f3aom75njrV4Ormv38FnxyvIRaQ0ZRmtydsWHMTGBzi5SAr059OxYOVHZHMiUAiKEzBnfvZn5uevdhIQlWFRJcq2rvGoonM3iGCYxOe5BMg4CFI3cx5sAjrYS+/YSmxbXrhMPJU6BKgmEfC0SMDpZoA9x0ke3soA3dMPK3KwmlrKYHyxmzT5hAORSB7zEIsu9seQqH9mA7uzNZNSSB4QrKM=
   on:
     tags: true
