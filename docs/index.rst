@@ -20,12 +20,12 @@ Serveliza's documentation
         :alt: Python versions
 
 .. image:: https://pyup.io/repos/github/chivke/serveliza/shield.svg
-     :target: https://pyup.io/repos/github/chivke/serveliza/
-     :alt: Updates
+        :target: https://pyup.io/repos/github/chivke/serveliza/
+        :alt: Updates
 
 .. image:: https://pyup.io/repos/github/chivke/serveliza/python-3-shield.svg
-     :target: https://pyup.io/repos/github/chivke/serveliza/
-     :alt: Python 3
+        :target: https://pyup.io/repos/github/chivke/serveliza/
+        :alt: Python 3
 
 
 |Intro|
