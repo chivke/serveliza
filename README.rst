@@ -19,8 +19,13 @@ Serveliza
 .. image:: https://img.shields.io/pypi/pyversions/serveliza
         :alt: Python versions
 
-.. image:: https://img.shields.io/github/repo-size/chivke/serveliza
-        :alt: repo size
+.. image:: https://pyup.io/repos/github/chivke/serveliza/shield.svg
+     :target: https://pyup.io/repos/github/chivke/serveliza/
+     :alt: Updates
+
+.. image:: https://pyup.io/repos/github/chivke/serveliza/python-3-shield.svg
+     :target: https://pyup.io/repos/github/chivke/serveliza/
+     :alt: Python 3
 
 
 |Intro|
