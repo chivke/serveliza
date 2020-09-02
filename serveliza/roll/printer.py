@@ -4,28 +4,44 @@ from serveliza.utils import humanize
 
 class ColorMixin:
     '''
+    Mixin that grants methods to color text if the colors property is true.
     '''
     def info(self, text):
+        '''
+        Color an information text (blue).
+        '''
         if self.colors:
             return f'\033[0;94m{str(text)}\033[0m'
         return text
 
     def ok(self, text):
+        '''
+        Color an success text (green).
+        '''
         if self.colors:
             return f'\033[0;32m{str(text)}\033[0m'
         return text
 
     def warn(self, text):
+        '''
+        Color an warn text (yellow).
+        '''
         if self.colors:
             return f'\033[0;33m{str(text)}\033[0m'
         return text
 
-    def lead(self, text):
+    def subtle(self, text):
+        '''
+        Color an sublte text (gray).
+        '''
         if self.colors:
             return f'\033[0;90m{str(text)}\033[0m'
         return text
 
     def error(self, text):
+        '''
+        Color an error text (red).
+        '''
         if self.colors:
             return f'\033[0;31m{str(text)}\033[0m'
         return text
@@ -33,29 +49,39 @@ class ColorMixin:
 
 class RollPrinter(ColorMixin):
     '''
+    :param bool verbose: If print the progress in screen (default False).
+    :param bool colors: If print with colors in the screen (default True).
+
+    :class:`RollPrinter <.RollPrinter>` is a class that allows it \
+    to print progress of application in the screen. It is instantiated \
+    within an instance of :class:`ElectoralRoll <.ElectoralRoll>`.
     '''
 
     @property
     def verbose(self):
+        '''
+        Property that determines whether to print the application \
+        progress to the screen.
+        '''
         return self._verbose
 
     @property
     def colors(self):
+        '''
+        Property that determines whether to print on screen with colors.
+        '''
         return self._colors
-
-    @property
-    def log(self):
-        return self._log
 
     def init_search(self, func, args):
         '''
+        Method that prints on constructor search.
         '''
         if not self.verbose:
             return func(*args)
         msg = self.info('Searching')
         if args[1]:
-            msg += self.lead(' (recursively) ')
-        msg += self.lead('... ')
+            msg += self.subtle(' (recursively) ')
+        msg += self.subtle('... ')
         print(msg, end='')
         result = func(*args)
         if result:
@@ -64,6 +90,7 @@ class RollPrinter(ColorMixin):
 
     def init_founded(self, files):
         '''
+        Method that prints the search result of the constructor.
         '''
         if not self.verbose:
             return None
@@ -72,20 +99,26 @@ class RollPrinter(ColorMixin):
         for file, meta in files.items():
             size = humanize.this_bytes(meta['bytes'])
             msg += ' '+self.ok(file)+' - '
-            msg += self.lead(f'({size}) {meta["relative"]}')+'\n'
+            msg += self.subtle(f'({size}) {meta["relative"]}')+'\n'
         print(msg)
 
     def init_auto(self):
+        '''
+        Method that prints if the start was automatic.
+        '''
         if not self.verbose:
             return None
         print(self.warn('Running automatically'))
 
     def run_started(self, started, files):
+        '''
+        Method that prints if the start of the analysis.
+        '''
         if not self.verbose:
             return None
         msg = self.info(f'Running analysis of electoral roll'
                         f' in {str(len(files))} pdf files')+'\n'
-        msg += self.lead(f'At {str(started)[:-7]}.')+'\n'
+        msg += self.subtle(f'At {str(started)[:-7]}.')+'\n'
         msg += self.info('Each file will be processed, adapted, '
                          'analyzed, memorized and exported in a '
                          'single cycle for better performance. '
@@ -93,16 +126,22 @@ class RollPrinter(ColorMixin):
         print(msg)
 
     def run_file_start(self, file, number):
+        '''
+        Method that prints if the start of the analysis of a file.
+        '''
         if not self.verbose:
             return None
         size = humanize.this_bytes(file['bytes'])
         msg = f'\r> {str(number)}: {self.ok(file["name"])} '
-        msg += self.lead(f' ({size}) ')
-        msg += self.lead(f' {file["relative"]}')
+        msg += self.subtle(f' ({size}) ')
+        msg += self.subtle(f' {file["relative"]}')
         self.clean_line()
         print(msg)
 
     def run_file_progress(self, pro):
+        '''
+        Method that prints the progress of the analysis of a file.
+        '''
         if not self.verbose:
             return None
         # spinner cycle
@@ -124,11 +163,14 @@ class RollPrinter(ColorMixin):
               end='', sep=' | ', flush=True)
 
     def run_file_end(self, metadata):
+        '''
+        Method that prints the completion of the analysis of a file.
+        '''
         if not self.verbose:
             return None
         self.clean_line()
-        msg = self.lead('\r- ') + self.info(metadata['rid'])
-        roll = self.lead(metadata['roll'][:17]+'...'+metadata['roll'][-10:])
+        msg = self.subtle('\r- ') + self.info(metadata['rid'])
+        roll = self.subtle(metadata['roll'][:17]+'...'+metadata['roll'][-10:])
         commune = metadata['commune']
         meta_entries = metadata['entries']
         entries = self.ok(
@@ -142,6 +184,7 @@ class RollPrinter(ColorMixin):
 
     def run_finalized(self, finalized, metadata):
         '''
+        Method that prints the completion of the analysis.
         '''
         if not self.verbose:
             return None
@@ -172,40 +215,38 @@ class RollPrinter(ColorMixin):
                 msg += self.ok(f'\n > {path}')
         msg += self.info(
             f'\n\nAnalysis of {str(files_num)} files finished.')+'\n'
-        msg += self.lead(f'At {str(finalized)[:-7]}.')
+        msg += self.subtle(f'At {str(finalized)[:-7]}.')
         msg += '\n'+self.warn('Duration: ')+f'{str(duration)[:-7]}'
-        msg += self.lead(
+        msg += self.subtle(
             f'\n- processing: {str(durations["processing"])}'
             f'\n- adapting: {str(durations["adapting"])}'
             f'\n- parsing: {str(durations["parsing"])}')
         if durations['memorizing']:
-            msg += self.lead(
+            msg += self.subtle(
                 f'\n- memorizing: {str(durations["memorizing"])}')
         if durations['exporting']:
-            msg += self.lead(
+            msg += self.subtle(
                 f'\n- exporting: {str(durations["exporting"])}')
         print(msg)
 
-    def __init__(self, *args, **kwargs):
-        # temp attrs
-        self._tmp_run_count = 0
-        self._tmp_run_file_progress_dt = None
-        if 'verbose' in kwargs:
-            self._verbose = bool(kwargs['verbose'])
-        else:
-            self._verbose = False
-        if 'colors' in kwargs:
-            self._colors = bool(kwargs['colors'])
-        self._colors = True
-        self._log = []
-
     def percent(self, of, total):
+        '''
+        Utility that returns a percentage in string. It receives \
+        two parameters (of and total) with which the relation calculates.
+        '''
         return str(int((100/total)*of))
 
     def clean_line(self):
+        '''
+        Utility that cleans the last line printed on the screen.
+        '''
         print('\r'+' '*os.get_terminal_size().columns, end='')
 
     def repr(self, obj):
+        '''
+        Method to print representation of :class:`ElectoralRoll \
+        <.ElectoralRoll>` class.
+        '''
         msg = '<' + self.info(obj.__class__.__name__)
         msg += ' instance ' + self.is_runned_tag(obj.is_runned)
         if obj.is_runned:
@@ -220,6 +261,23 @@ class RollPrinter(ColorMixin):
         return msg
 
     def is_runned_tag(self, is_runned):
+        '''
+        Utility returns a text string formatted to print if \
+        :class:`ElectoralRol <.ElectoralRoll>` ran.
+        '''
         if is_runned:
             return f"[{self.ok('is_runned')}]"
         return f"[{self.warn('not is_runned')}]"
+
+    def __init__(self, *args, **kwargs):
+        # temp attrs
+        self._tmp_run_count = 0
+        self._tmp_run_file_progress_dt = None
+        if 'verbose' in kwargs:
+            self._verbose = bool(kwargs['verbose'])
+        else:
+            self._verbose = False
+        if 'colors' in kwargs:
+            self._colors = bool(kwargs['colors'])
+        self._colors = True
+        self._log = []

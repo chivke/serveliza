@@ -3,7 +3,7 @@ class RollMemorizer:
     '''
     :param bool memorize: If the memorizer is activated (default True)
 
-    :class:`RollMemorizer <.RollMemorizer>` is a class that allows you \
+    :class:`RollMemorizer <.RollMemorizer>` is a class that allows it \
     to store data and errors from the electoral roll. It is instantiated \
     within an instance of :class:`ElectoralRoll <.ElectoralRoll>`.
     '''
