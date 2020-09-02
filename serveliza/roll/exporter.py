@@ -43,7 +43,7 @@ class RollExporter:
         exporting the data from a parsed sheet into files as configured \
         in the constructor.
         '''
-        if not self.if_active:
+        if not self.is_active:
             return None
         file, created = self.get_or_create_file(parsed)
         with file.open('a') as f:
@@ -56,6 +56,12 @@ class RollExporter:
 
     def export_summary(self, rid, metadata):
         '''
+        :param str rid: identifier of the electoral roll
+        :param dict metadata: metadata of the electoral roll.
+
+        :meth:`export_summary <.RollExporter.export_summary>` is a \
+        method that exports the metadata of the electoral roll as a \
+        summary in a yaml file.
         '''
         def metadata_serializer(meta):
             meta = {**meta}
