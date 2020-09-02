@@ -46,7 +46,7 @@ class TestServeliza(unittest.TestCase):
 
     def roll_assert_props(self, roll):
         # operationals
-        self.assertFalse(roll.runned)
+        self.assertFalse(roll.is_runned)
         self.assertEqual(len(roll.metadata), 3)
         self.assertTrue('analysis' in roll.metadata)
         self.assertEqual(len(roll.metadata['analysis']), 3)
@@ -69,7 +69,7 @@ class TestServeliza(unittest.TestCase):
         self.assertTrue(isinstance(roll.exporter, RollExporter))
 
     def roll_assert_runned(self, roll):
-        self.assertTrue(roll.runned)
+        self.assertTrue(roll.is_runned)
         # storage property
         self.assertTrue(bool(roll.rid))
         self.assertTrue(bool(roll.roll))
