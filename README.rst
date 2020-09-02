@@ -32,7 +32,7 @@ Serveliza
 |Intro|
 
 
-Serveliza is an application to extract data of the Chilean Electoral Service (SERVEL) from different open sources.
+`Serveliza`_ is an application to extract data of the Chilean Electoral Service (SERVEL) from different open sources.
 
 A first step to democratize data is to make it accessible for free use.
 
@@ -82,6 +82,7 @@ GNU General Public License v3
     :alt: Electoral roll example gif
     :width: 80%
 
+.. _Serveliza: https://github.com/chivke/serveliza/
 .. _Documentation: https://serveliza.readthedocs.io/
 .. _Installation: https://serveliza.readthedocs.io/en/latest/installation.html
 .. _Usage: https://serveliza.readthedocs.io/en/latest/usage.html

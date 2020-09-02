@@ -3,7 +3,7 @@ History
 =======
 
 
-0.1.2 (2020-09-X)
+0.1.2 (2020-09-02)
 ------------------
 
 * Update README and documentation.
