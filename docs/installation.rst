@@ -7,7 +7,7 @@ Installation
 System requirements
 -------------------
 
-Serveliza needs the installation of system requirements due to the use of the `pdftotext <https://github.com/jalan/pdftotext>`_ package as a text processor from pdf files.
+Serveliza needs the installation of system requirements due to the use of the `pdftotext`_ package as a text processor from pdf files.
 
 .. code-block:: console
 
@@ -42,3 +42,4 @@ Once you have a copy of the source, you can install it with:
     $ python setup.py install
 
 .. _Github repo: https://github.com/chivke/serveliza
+.. _pdftotext: https://github.com/jalan/pdftotext`
