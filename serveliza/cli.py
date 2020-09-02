@@ -59,10 +59,10 @@ def roll_parser(subparser):
         choices=[x[0] for x in ElectoralRoll.processor_ref.items()])
     parser_roll.add_argument(
         '-m', '--mode', help=RollExporter.mode.__doc__,
-        nargs=1, type=str, default='unified', choices=RollExporter._modes)
+        nargs=1, type=str, default='unified', choices=RollExporter.modes)
     parser_roll.add_argument(
         '-s', '--separator', help=RollExporter.mode_sep.__doc__,
-        nargs=1, type=str, choices=RollExporter._mode_sep_opts)
+        nargs=1, type=str, choices=RollExporter.mode_sep_opts)
     parser_roll.add_argument(
         '-r', '--recursive', help=ElectoralRoll.recursive.__doc__,
         action='store_true', default=False)
