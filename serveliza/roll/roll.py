@@ -480,7 +480,6 @@ class ElectoralRoll(PDFProcessorMixin):
         '''
         return self.memorizer.errors
 
-
     @property
     def to_dataframe(self):
         '''
