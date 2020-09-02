@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: serveliza 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 20:18-0400\n"
+"POT-Creation-Date: 2020-09-02 18:32-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,13 +92,15 @@ msgstr ""
 #: serveliza.roll.adapters.PdftotextAdapterMixin.adapter_pdftotext
 #: serveliza.roll.adapters.RollAdapter serveliza.roll.exporter.RollExporter
 #: serveliza.roll.exporter.RollExporter.export_sheet
+#: serveliza.roll.exporter.RollExporter.export_summary
 #: serveliza.roll.memorizer.RollMemorizer
 #: serveliza.roll.memorizer.RollMemorizer.memorize
 #: serveliza.roll.memorizer.RollMemorizer.prepare_rid
 #: serveliza.roll.memorizer.RollMemorizer.store_metadata_entries
 #: serveliza.roll.memorizer.RollMemorizer.store_metadata_nulls
 #: serveliza.roll.memorizer.RollMemorizer.store_metadata_places
-#: serveliza.roll.roll.ElectoralRoll serveliza.roll.roll.ElectoralRoll.run_file
+#: serveliza.roll.printer.RollPrinter serveliza.roll.roll.ElectoralRoll
+#: serveliza.roll.roll.ElectoralRoll.run_file
 #: serveliza.roll.roll.ElectoralRoll.sheet_export
 #: serveliza.roll.roll.ElectoralRoll.sheet_memorize
 #: serveliza.roll.roll.ElectoralRoll.sheet_parse
@@ -851,8 +853,8 @@ msgstr ""
 
 #: of serveliza.roll.memorizer.RollMemorizer:3
 msgid ""
-":class:`RollMemorizer <.RollMemorizer>` is a class that allows you     to"
-" store data and errors from the electoral roll. It is instantiated     "
+":class:`RollMemorizer <.RollMemorizer>` is a class that allows it     to "
+"store data and errors from the electoral roll. It is instantiated     "
 "within an instance of :class:`ElectoralRoll <.ElectoralRoll>`."
 msgstr ""
 
@@ -1030,6 +1032,21 @@ msgid ""
 "in the constructor."
 msgstr ""
 
+#: of serveliza.roll.exporter.RollExporter.export_summary:1
+msgid "identifier of the electoral roll"
+msgstr ""
+
+#: of serveliza.roll.exporter.RollExporter.export_summary:2
+msgid "metadata of the electoral roll."
+msgstr ""
+
+#: of serveliza.roll.exporter.RollExporter.export_summary:4
+msgid ""
+":meth:`export_summary <.RollExporter.export_summary>` is a         method"
+" that exports the metadata of the electoral roll as a         summary in "
+"a yaml file."
+msgstr ""
+
 #: of serveliza.roll.exporter.RollExporter.random_suffix:1
 msgid ""
 "Determines whether exported files have a random         text string "
@@ -1054,6 +1071,109 @@ msgstr ""
 
 #: ../../reference.rst:58
 msgid "Roll printer"
+msgstr ""
+
+#: of serveliza.roll.printer.ColorMixin:1
+msgid "Mixin that grants methods to color text if the colors property is true."
+msgstr ""
+
+#: of serveliza.roll.printer.ColorMixin.info:1
+msgid "Color an information text (blue)."
+msgstr ""
+
+#: of serveliza.roll.printer.ColorMixin.ok:1
+msgid "Color an success text (green)."
+msgstr ""
+
+#: of serveliza.roll.printer.ColorMixin.warn:1
+msgid "Color an warn text (yellow)."
+msgstr ""
+
+#: of serveliza.roll.printer.ColorMixin.subtle:1
+msgid "Color an sublte text (gray)."
+msgstr ""
+
+#: of serveliza.roll.printer.ColorMixin.error:1
+msgid "Color an error text (red)."
+msgstr ""
+
+#: of serveliza.roll.printer.RollPrinter:1
+msgid "If print the progress in screen (default False)."
+msgstr ""
+
+#: of serveliza.roll.printer.RollPrinter:2
+msgid "If print with colors in the screen (default True)."
+msgstr ""
+
+#: of serveliza.roll.printer.RollPrinter:4
+msgid ""
+":class:`RollPrinter <.RollPrinter>` is a class that allows it     to "
+"print progress of application in the screen. It is instantiated     "
+"within an instance of :class:`ElectoralRoll <.ElectoralRoll>`."
+msgstr ""
+
+#: of serveliza.roll.printer.RollPrinter.verbose:1
+msgid ""
+"Property that determines whether to print the application         "
+"progress to the screen."
+msgstr ""
+
+#: of serveliza.roll.printer.RollPrinter.colors:1
+msgid "Property that determines whether to print on screen with colors."
+msgstr ""
+
+#: of serveliza.roll.printer.RollPrinter.init_search:1
+msgid "Method that prints on constructor search."
+msgstr ""
+
+#: of serveliza.roll.printer.RollPrinter.init_founded:1
+msgid "Method that prints the search result of the constructor."
+msgstr ""
+
+#: of serveliza.roll.printer.RollPrinter.init_auto:1
+msgid "Method that prints if the start was automatic."
+msgstr ""
+
+#: of serveliza.roll.printer.RollPrinter.run_started:1
+msgid "Method that prints if the start of the analysis."
+msgstr ""
+
+#: of serveliza.roll.printer.RollPrinter.run_file_start:1
+msgid "Method that prints if the start of the analysis of a file."
+msgstr ""
+
+#: of serveliza.roll.printer.RollPrinter.run_file_progress:1
+msgid "Method that prints the progress of the analysis of a file."
+msgstr ""
+
+#: of serveliza.roll.printer.RollPrinter.run_file_end:1
+msgid "Method that prints the completion of the analysis of a file."
+msgstr ""
+
+#: of serveliza.roll.printer.RollPrinter.run_finalized:1
+msgid "Method that prints the completion of the analysis."
+msgstr ""
+
+#: of serveliza.roll.printer.RollPrinter.percent:1
+msgid ""
+"Utility that returns a percentage in string. It receives         two "
+"parameters (of and total) with which the relation calculates."
+msgstr ""
+
+#: of serveliza.roll.printer.RollPrinter.clean_line:1
+msgid "Utility that cleans the last line printed on the screen."
+msgstr ""
+
+#: of serveliza.roll.printer.RollPrinter.repr:1
+msgid ""
+"Method to print representation of :class:`ElectoralRoll         "
+"<.ElectoralRoll>` class."
+msgstr ""
+
+#: of serveliza.roll.printer.RollPrinter.is_runned_tag:1
+msgid ""
+"Utility returns a text string formatted to print if         "
+":class:`ElectoralRol <.ElectoralRoll>` ran."
 msgstr ""
 
 #: ../../reference.rst:66
@@ -1387,5 +1507,14 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid ":mod:`serveliza.mixins.pdf_processors`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ ":class:`RollMemorizer <.RollMemorizer>` is a "
+#~ "class that allows you     to store "
+#~ "data and errors from the electoral "
+#~ "roll. It is instantiated     within an"
+#~ " instance of :class:`ElectoralRoll "
+#~ "<.ElectoralRoll>`."
 #~ msgstr ""
 
