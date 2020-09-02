@@ -19,15 +19,15 @@ msgstr ""
 
 #: ../../usage.rst:3
 msgid "Usage"
-msgstr ""
+msgstr "Uso"
 
 #: ../../usage.rst:5
 msgid "Serveliza can be used in different ways."
-msgstr ""
+msgstr "Serveliza puede usarse de distintas maneras."
 
 #: ../../usage.rst:8
 msgid "Command line usage"
-msgstr ""
+msgstr "Uso de línea de comandos"
 
 #: ../../usage.rst:10
 msgid "|Intro|"
@@ -35,34 +35,39 @@ msgstr ""
 
 #: ../../usage.rst:12
 msgid "If you run from the command line you can access help on its use."
-msgstr ""
+msgstr "Si se corre desde la línea de comandos puedes acceder a ayuda de "
+"como usarlo."
 
 #: ../../usage.rst:37
 msgid "As well as each of the available subcommands."
-msgstr ""
+msgstr "También para cada uno de sus subcomandos disponibles."
 
 #: ../../usage.rst:83
 msgid "Programmatic usage"
-msgstr ""
+msgstr "Uso programático"
 
 #: ../../usage.rst:85
 msgid ""
 "You can use the serveliza components by importing from their sub-packages"
 " as :py:mod:`serveliza.roll`, :py:mod:`serveliza.utils` or "
 ":py:mod:`serveliza.mixins`."
-msgstr ""
+msgstr "Puede usar los componentes de serveliza importándolos como subpaquetes"
+" como :py:mod:`serveliza.roll`, :py:mod:`serveliza.utils` o "
+":py:mod:`serveliza.mixins`."
 
 #: ../../usage.rst:87
 msgid ""
 "For example, you can import the main class that works with electoral "
 "rolls."
-msgstr ""
+msgstr "Por ejemplo, si puedes importar la clase principal que trabaja con "
+"padrones electorales."
 
 #: ../../usage.rst:93
 msgid ""
 "It can also be imported in abbreviated form defined in the "
 "``__init__.py`` file."
-msgstr ""
+msgstr "También puede ser importada en forma abreviada, definida en el "
+"archivo ``__init__.py``."
 
 #: ../../usage.rst:99
 msgid ""
@@ -70,16 +75,17 @@ msgid ""
 "shortcuts for specific actions, instantiating the classes in a "
 "transparent way. The command line interface is powered by these "
 "functions."
-msgstr ""
+msgstr "Dentro de serveliza, el módulo del mismo nombre define funciones "
+"para acceso rápido a diferentes acciones, instanciando las clases en "
+"forma transparente. La interfaz de línea de comandos funciona a través de "
+"estas funciones."
 
 #: ../../usage.rst:101
 msgid "For example, you can get a pandas dataframe object through a function:"
-msgstr ""
+msgstr "Por ejemplo, puedes obtener un objecto dataframe de pandas a través "
+"de la función:"
 
 #: ../../usage.rst:108
 msgid "That otherwise it would be like this:"
-msgstr ""
-
-#~ msgid "To use serveliza in a project::"
-#~ msgstr ""
+msgstr "Esto de otra manera sería así:"
 

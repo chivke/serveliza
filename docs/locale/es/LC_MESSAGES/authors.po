@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2020, chivke
 # This file is distributed under the same license as the serveliza package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+# FIRST AUTHOR <chivke@pm.me>, 2020.
 #
 #, fuzzy
 msgid ""
@@ -19,11 +19,11 @@ msgstr ""
 
 #: ../../../AUTHORS.rst:3
 msgid "Credits"
-msgstr ""
+msgstr "Créditos"
 
 #: ../../../AUTHORS.rst:6
 msgid "Development Lead"
-msgstr ""
+msgstr "Responsable de desarrollo"
 
 #: ../../../AUTHORS.rst:8
 msgid "chivke <chivke@pm.me>"
@@ -31,9 +31,9 @@ msgstr ""
 
 #: ../../../AUTHORS.rst:11
 msgid "Contributors"
-msgstr ""
+msgstr "Contribuidores"
 
 #: ../../../AUTHORS.rst:13
 msgid "None yet. Why not be the first?"
-msgstr ""
+msgstr "No todavía, ¿te gustaría contribuir?"
 

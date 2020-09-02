@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: serveliza 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-28 17:49-0400\n"
+"POT-Creation-Date: 2020-09-01 12:42-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,61 +19,67 @@ msgstr ""
 
 #: ../../../CONTRIBUTING.rst:5
 msgid "Contributing"
-msgstr ""
+msgstr "Constribuyendo"
 
 #: ../../../CONTRIBUTING.rst:7
 msgid ""
 "Contributions are welcome, and they are greatly appreciated! Every little"
 " bit helps, and credit will always be given."
 msgstr ""
+"Las contribuciones son benvenidas y apreciadas. Cualquier ayuda es bien "
+"sirve y será reconocida en los créditos."
 
 #: ../../../CONTRIBUTING.rst:10
 msgid "You can contribute in many ways:"
-msgstr ""
+msgstr "Puedes contribuir de muchas maneras:"
 
 #: ../../../CONTRIBUTING.rst:13
 msgid "Types of Contributions"
-msgstr ""
+msgstr "Maneras de constribuir"
 
 #: ../../../CONTRIBUTING.rst:16
 msgid "Report Bugs"
-msgstr ""
+msgstr "Reportar bugs"
 
 #: ../../../CONTRIBUTING.rst:18
 msgid "Report bugs at https://github.com/chivke/serveliza/issues."
-msgstr ""
+msgstr "Reporta los bugs en https://github.com/chivke/serveliza/issues."
 
 #: ../../../CONTRIBUTING.rst:20
 msgid "If you are reporting a bug, please include:"
-msgstr ""
+msgstr "Si vas a reportar un bug, favor incluir:"
 
 #: ../../../CONTRIBUTING.rst:22
 msgid "Your operating system name and version."
-msgstr ""
+msgstr "El nombre de tu sistema operativo y su versión."
 
 #: ../../../CONTRIBUTING.rst:23
 msgid ""
 "Any details about your local setup that might be helpful in "
 "troubleshooting."
 msgstr ""
+"Cualquier detalle sobre tu entorno y configuración local será de utilidad"
+" para su resolución."
 
 #: ../../../CONTRIBUTING.rst:24
 msgid "Detailed steps to reproduce the bug."
-msgstr ""
+msgstr "Detalle las etapas para reproducir el bug."
 
 #: ../../../CONTRIBUTING.rst:27
 msgid "Fix Bugs"
-msgstr ""
+msgstr "Arreglar bugs"
 
 #: ../../../CONTRIBUTING.rst:29
 msgid ""
 "Look through the GitHub issues for bugs. Anything tagged with \"bug\" and"
 " \"help wanted\" is open to whoever wants to implement it."
 msgstr ""
+"Revisa Github issues si hay bugs sin resolver. Cualquier issue marcada "
+"como \"bug\" and \"help wanted\" están abiertos a ser resueltos."
 
 #: ../../../CONTRIBUTING.rst:33
 msgid "Implement Features"
-msgstr ""
+msgstr "Implementa características"
 
 #: ../../../CONTRIBUTING.rst:35
 msgid ""
@@ -81,10 +87,13 @@ msgid ""
 "\"enhancement\" and \"help wanted\" is open to whoever wants to implement"
 " it."
 msgstr ""
+"Revisa Github issues si hay características sin resolver. Cualquier que "
+"esté marcado como \"enhancement\" y \"help wanted\" están abiertas a "
+"serimplementadas.\""
 
 #: ../../../CONTRIBUTING.rst:39
 msgid "Write Documentation"
-msgstr ""
+msgstr "Escribir documentación"
 
 #: ../../../CONTRIBUTING.rst:41
 msgid ""
@@ -92,104 +101,123 @@ msgid ""
 "official serveliza docs, in docstrings, or even on the web in blog posts,"
 " articles, and such."
 msgstr ""
+"Serveliza siempre requiere mayor documentación, ya sea en alguna parte de"
+" sus docs, en los docstring o tutoriales, guías, artículos, etc."
 
 #: ../../../CONTRIBUTING.rst:46
 msgid "Submit Feedback"
-msgstr ""
+msgstr "Enviar retroalimentación"
 
 #: ../../../CONTRIBUTING.rst:48
 msgid ""
 "The best way to send feedback is to file an issue at "
 "https://github.com/chivke/serveliza/issues."
 msgstr ""
+"La mejor manera enviar una retroalimentación es abriendo un issueen "
+"https://github.com/chivke/serveliza/issues."
 
 #: ../../../CONTRIBUTING.rst:50
 msgid "If you are proposing a feature:"
-msgstr ""
+msgstr "Si estas proponiendo una característica:"
 
 #: ../../../CONTRIBUTING.rst:52
 msgid "Explain in detail how it would work."
-msgstr ""
+msgstr "Explica en detalle cómo trabajaría."
 
 #: ../../../CONTRIBUTING.rst:53
 msgid "Keep the scope as narrow as possible, to make it easier to implement."
 msgstr ""
+"Manten el alcance de la descripción, para hacer más fácil su "
+"implementación."
 
 #: ../../../CONTRIBUTING.rst:54
 msgid ""
 "Remember that this is a volunteer-driven project, and that contributions "
 "are welcome :)"
 msgstr ""
+"Recuerda que este es un proyecto conducido voluntariamente y todas las "
+"constribuciones son bienvenidas."
 
 #: ../../../CONTRIBUTING.rst:58
 msgid "Get Started!"
-msgstr ""
+msgstr "Empezar"
 
 #: ../../../CONTRIBUTING.rst:60
 msgid ""
 "Ready to contribute? Here's how to set up `serveliza` for local "
 "development."
 msgstr ""
+"Listo para contribuir? Acá hay una guía para levantar serveliza en un "
+"entorno local de desarrollo."
 
 #: ../../../CONTRIBUTING.rst:62
 msgid "Fork the `serveliza` repo on GitHub."
-msgstr ""
+msgstr "Realiza un fork del repo de `serveliza` en GitHub."
 
 #: ../../../CONTRIBUTING.rst:63
 msgid ""
 "Install system requirements to use `pdftotext "
 "<https://github.com/jalan/pdftotext>`::"
 msgstr ""
+"Instala  los requerimientos del sistema para usar `pdftotext "
+"<https://github.com/jalan/pdftotext>`::"
 
 #: ../../../CONTRIBUTING.rst:67
 msgid "Clone your fork locally::"
-msgstr ""
+msgstr "Clona el fork localmente::"
 
 #: ../../../CONTRIBUTING.rst:71
 msgid ""
 "Create a virtualenv in to your local copy. Assuming you have python3-venv"
 " installed, this is how you set up your fork for local development::"
 msgstr ""
+"Crea un entorno virtual en tu copia local. Asumiendo que tienes "
+"python3-venv instalado, así sería la habilitación del entorno de "
+"desarrollo local del fork::"
 
 #: ../../../CONTRIBUTING.rst:80
 msgid "Create a branch for local development::"
-msgstr ""
+msgstr "Crea una rama para el desarrollo local::"
 
 #: ../../../CONTRIBUTING.rst:84
 msgid "Now you can make your changes locally."
-msgstr ""
+msgstr "Realiza los cambios localmente."
 
 #: ../../../CONTRIBUTING.rst:86
 msgid ""
 "When you're done making changes, check that your changes pass flake8 and "
 "the tests, including testing other Python versions with tox::"
 msgstr ""
+"Cuando estes listo realizando cambios, chequea que tus cambios pasan "
+"flake8 y los tests, incluyendo el testing de otras versiones con tox::"
 
 #: ../../../CONTRIBUTING.rst:91
 msgid ""
 "If you made changes that affect the documentation, it is necessary to "
 "update the pot files for internationalization::"
 msgstr ""
+"Si realizas cambios que afectan a la documentación, es necesario "
+"actualizar los archivos pot para la internacionalización."
 
 #: ../../../CONTRIBUTING.rst:98
 msgid "Commit your changes and push your branch to GitHub::"
-msgstr ""
+msgstr "Comitea tus cambios y haz un push de tu rama en GitHub::"
 
 #: ../../../CONTRIBUTING.rst:104
 msgid "Submit a pull request through the GitHub website."
-msgstr ""
+msgstr "Envía un pull request a través de la página de GitHub."
 
 #: ../../../CONTRIBUTING.rst:107
 msgid "Pull Request Guidelines"
-msgstr ""
+msgstr "Guía para Pull Request"
 
 #: ../../../CONTRIBUTING.rst:109
 msgid "Before you submit a pull request, check that it meets these guidelines:"
-msgstr ""
+msgstr "Antes de enviar un pull request, verifica esta guía:"
 
 #: ../../../CONTRIBUTING.rst:111
 msgid "The pull request should include tests."
-msgstr ""
+msgstr "El pull request debe incluir tests."
 
 #: ../../../CONTRIBUTING.rst:112
 msgid ""
@@ -197,36 +225,46 @@ msgid ""
 "your new functionality into a function with a docstring, and add the "
 "feature to the list in README.rst."
 msgstr ""
+"Si el pull request agrega funcionalidad, se deben actualizar los docs. "
+"Documenta tu nueva funcionalidad en los docstring y agregala a las "
+"características del README.rst."
 
 #: ../../../CONTRIBUTING.rst:115
+#, fuzzy
 msgid ""
-"The pull request should work for Python 3.5, 3.6, 3.7 and 3.8, and for "
-"PyPy. Check https://travis-ci.com/chivke/serveliza/pull_requests and make"
-" sure that the tests pass for all supported Python versions."
+"The pull request should work for Python 3.6, 3.7 and 3.8, and for PyPy. "
+"Check https://travis-ci.com/chivke/serveliza/pull_requests and make sure "
+"that the tests pass for all supported Python versions."
 msgstr ""
+"El pull request debe correr con Python 3.6, 3.7 y 3.8 y en PyPi. Verifica"
+" https://travis-ci.com/chivke/serveliza/pull_requests para asegurarte que"
+" está soportada en todas las versiones de Python admitidas."
 
 #: ../../../CONTRIBUTING.rst:120
 msgid "Tips"
-msgstr ""
+msgstr "Tips"
 
 #: ../../../CONTRIBUTING.rst:122
 msgid "To run a subset of tests::"
-msgstr ""
+msgstr "Correr un subconjunto de tests::"
 
 #: ../../../CONTRIBUTING.rst:127
 msgid "Deploying"
-msgstr ""
+msgstr "Desplegando"
 
 #: ../../../CONTRIBUTING.rst:129
 msgid ""
 "A reminder for the maintainers on how to deploy. Make sure all your "
 "changes are committed (including an entry in HISTORY.rst). Then run::"
 msgstr ""
+"Un recordatorio para los mantenedores sobre como desplegar. Asegurate que"
+" todos los cambios están commitiados (incluída la entrada en "
+"HISTORY.rst). Luego corre::"
 
 #: ../../../CONTRIBUTING.rst:137
 msgid "Travis will then deploy to PyPI if tests pass."
-msgstr ""
+msgstr "Travis desplegará en PyPI si pasan los tests"
 
 #~ msgid "To get flake8 and tox, just pip install them into your virtualenv."
-#~ msgstr ""
+#~ msgstr "Para tener flake 8 y tox, instalalos en tu entorno virtual."
 

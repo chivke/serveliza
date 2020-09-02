@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: serveliza 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-29 02:11-0400\n"
+"POT-Creation-Date: 2020-09-01 12:42-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,63 +17,104 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
 
-#: ../../index.rst:2
+#: ../../index.rst:3
 msgid "Serveliza's documentation"
 msgstr "Documentación de Serveliza"
 
-#: ../../index.rst:18
+#: ../../../README.rst:28
 msgid "|Intro|"
 msgstr ""
 
-#: ../../index.rst:20
+#: ../../../README.rst:31
 msgid ""
 "Serveliza is an application to extract data of the Chilean Electoral "
 "Service (SERVEL) from different open sources."
 msgstr ""
 
-#: ../../index.rst:22
+#: ../../../README.rst:33
 msgid "A first step to democratize data is to make it accessible for free use."
 msgstr ""
 
-#: ../../index.rst:26
+#: ../../../README.rst:37
 msgid "Quick start"
 msgstr ""
 
-#: ../../index.rst:34
+#: ../../../README.rst:45
 msgid "Features"
 msgstr ""
 
-#: ../../index.rst:36
+#: ../../../README.rst:47
 msgid ""
 "It analyzes, extracts and exports data from the **electoral roll**, "
 "having as a source the public pdf files distributed by SERVEL."
 msgstr ""
 
-#: ../../index.rst:38
+#: ../../../README.rst:49
 msgid "|Roll|"
 msgstr ""
 
-#: ../../index.rst:40
-msgid "*Added in the first release (0.1.0.)*"
+#: ../../../README.rst:51
+msgid "*Added in the first release (0.1)*"
 msgstr ""
 
-#: ../../index.rst:43
+#: ../../../README.rst:54
+#, fuzzy
+msgid "`Documentation`_"
+msgstr "Documentación de Serveliza"
+
+#: ../../../README.rst:56
+msgid "`Installation`_"
+msgstr ""
+
+#: ../../../README.rst:57
+msgid "`Usage`_"
+msgstr ""
+
+#: ../../../README.rst:58
+msgid "`API reference`_"
+msgstr ""
+
+#: ../../../README.rst:59
+msgid "`Contributing`_"
+msgstr ""
+
+#: ../../../README.rst:60
+msgid "`Credits`_"
+msgstr ""
+
+#: ../../../README.rst:61
+msgid "`History`_"
+msgstr ""
+
+#: ../../../README.rst:63
+msgid "`Spanish translation`_ is also available."
+msgstr ""
+
+#: ../../../README.rst:66
+msgid "License"
+msgstr ""
+
+#: ../../../README.rst:68
+msgid "GNU General Public License v3"
+msgstr ""
+
+#: ../../index.rst:10
 msgid "Contents"
 msgstr ""
 
-#: ../../index.rst:56
+#: ../../index.rst:23
 msgid "Index's"
 msgstr ""
 
-#: ../../index.rst:58
+#: ../../index.rst:25
 msgid ":ref:`genindex`"
 msgstr ""
 
-#: ../../index.rst:59
+#: ../../index.rst:26
 msgid ":ref:`modindex`"
 msgstr ""
 
-#: ../../index.rst:60
+#: ../../index.rst:27
 msgid ":ref:`search`"
 msgstr ""
 
@@ -84,5 +125,13 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Indices and tables"
+#~ msgstr ""
+
+#~ msgid "*Added in the first release (0.1.0.)*"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Full documentation in `readthedocs "
+#~ "<https://serveliza.readthedocs.io>`_."
 #~ msgstr ""
 
