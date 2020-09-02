@@ -9,14 +9,42 @@ import csv
 
 class RollExporter:
     '''
+    :class:`RollExporter <.RollExporter>` is a class for exporting electoral \
+    roll data in csv files.
+
+    :param bool export: If the export is activated (default False)
+    :param str output: directory to store the data in .csv (see more in \
+        :attr:`output <.RollExporter.output>`.
+    :param str mode: determines the data export mode in files (*unified* o \
+        *separated*, see more in :attr:`mode <.RollExporter.mode>`).
+    :param str mode_sep: Criteria for separating files in export in \
+        separate mode (*region* o *commune*, see more in :attr:`mode \
+        <.RollExporter.mode>`).
+    :param bool random_suffix: Determines whether exported files have a \
+        random text string appended to the end.
+    :param bool summary: Determines whether to generate a summary file of \
+        the export and the extracted data.
+
+    It is instantiated within an instance of :class:`ElectoralRoll \
+    <.ElectoralRoll>`.
     '''
-    _modes = ['unified', 'separated']
-    _mode_sep_opts = ['commune', 'region']
+
+    #: Available export modes.
+    modes = ['unified', 'separated']
+    #: Available file separation modes
+    mode_sep_opts = ['commune', 'region']
 
     def export_sheet(self, parsed):
-        if not self.export:
+        '''
+        :param obj parsed: an instance of :class:`RollParser <.RollParser>`.
+        :return: the absolute path of the file where the data was exported.
+
+        :meth:`export_sheet <.RollExporter.export_sheet>` is a method of \
+        exporting the data from a parsed sheet into files as configured \
+        in the constructor.
+        '''
+        if not self.if_active:
             return None
-        # rid = parsed.metadata['rid']
         file, created = self.get_or_create_file(parsed)
         with file.open('a') as f:
             writer = csv.writer(f)
@@ -27,6 +55,8 @@ class RollExporter:
         return str(file.absolute())
 
     def export_summary(self, rid, metadata):
+        '''
+        '''
         def metadata_serializer(meta):
             meta = {**meta}
             for key in meta:
@@ -38,14 +68,9 @@ class RollExporter:
                 else:
                     continue
             return meta
-        if not self.export or not self.summary:
+        if not self.is_active or not self.summary:
             return None
         metadata = metadata_serializer(metadata)
-        # files_num = len(metadata['files'])
-        # analysis = metadata['analysis']
-        # duration = analysis['finalized'] - analysis['started']
-        # durations = analysis['durations']
-        # rolls = metadata['rolls']
         file = self.create_summary(rid)
         with file.open('w') as f:
             f.write('# Serveliza summary\n')
@@ -93,7 +118,7 @@ class RollExporter:
     @property
     def mode(self):
         '''
-        'Determines the data export mode in files. If it is "unified" \
+        Determines the data export mode in files. If it is "unified" \
         (default) it creates a single csv file with the data, or if it \
         is "separated" into several according to communal or \
         regional criteria.'
@@ -102,9 +127,9 @@ class RollExporter:
 
     @mode.setter
     def mode(self, mode):
-        if mode not in self._modes:
+        if mode not in self.modes:
             raise TypeError('mode must be: '
-                            ','.join(self._modes))
+                            ','.join(self.modes))
         self._mode = mode
 
     @property
@@ -116,16 +141,20 @@ class RollExporter:
 
     @mode_sep.setter
     def mode_sep(self, mode_sep):
-        if mode_sep not in self._mode_sep_opts:
+        if mode_sep not in self.mode_sep_opts:
             raise TypeError('mode_sep must be: '
-                            ','.join(self._mode_sep_opts))
+                            ','.join(self.mode_sep_opts))
         self._mode_sep = mode_sep
 
     @property
-    def export(self):
+    def is_active(self):
         '''
+        :return: boolean.
+
+        Property that indicates if the memorizer is active as defined \
+        in the constructor.
         '''
-        return self._export
+        return self._is_active
 
     @property
     def random_suffix(self):
@@ -144,8 +173,8 @@ class RollExporter:
         return self._summary
 
     def __init__(self, *args, **kwargs):
-        self._export = bool(kwargs.get('export', False))
-        if not self.export:
+        self._is_active = bool(kwargs.get('export', False))
+        if not self.is_active:
             return None
         self.output = kwargs.get('output', 'output')
         self.mode = kwargs.get('mode', 'unified')

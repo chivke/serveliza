@@ -7,7 +7,7 @@ import numpy as np
 
 from serveliza.mixins.pdf import PDFProcessorMixin
 from serveliza.utils import pdf as pdf_utils
-from .parsers import SheetRollParser
+from .parsers import RollParser
 from .adapters import RollAdapter
 from .printer import RollPrinter
 from .memorizer import RollMemorizer
@@ -23,59 +23,102 @@ DURATIONS_SCHEMA = {
 
 
 class ElectoralRoll(PDFProcessorMixin):
-    '''
+    '''ElectoralRoll
+
     :class:`ElectoralRoll <.ElectoralRoll>` allows to \
-    instantiate an electoral register of the chilean Electoral Service \
-    (Servicio Electoral de Chile, SERVEL) from PDF files.
+    instantiate an electoral roll of the chilean Electoral Service \
+    (*Servicio Electoral de Chile*, SERVEL) from PDF files.
 
-    The path of the directory or file to be used as the data source must \
-    be specified through the "source" parameter when instantiating the \
-    object. The "verbose" parameter determines if the progress and the \
-    result will be printed on the screen or will be kept silent, it accepts \
-    only Boolean values. Both characteristics are inherited from \
-    :class:`DirFilePDFMixin <.DirFilePDFMixin>` class.
+    Different parameters are handled in the constructor of this class. In \
+    itself it handles the *source* parameter that determines the path \
+    where to recognize pdf files (it can be a directory path or a file), \
+    the *recursive* parameter that determines whether to search in the \
+    root of the defined path or in each of its subdirectories, and \
+    the *auto* parameter that determines if the extraction is automatic. \
+    It also inherits parameters from :class:`PDFProcessorMixin \
+    <.PDFProcessorMixin>` (*processor*). Likewise, in the constructor \
+    it instantiates other nested classes by routing their parameters.
 
-    The :meth:`run <.ElectoralRoll.run>` method starts the analysis \
-    process of the text extracted from each sheet of the files. A parser \
-    (:class:`SheetRegisterParser <.SheetRegisterParser>`) will be iterated \
-    over each sheet, which will be instantiated from the class defined in \
-    the class attribute :attr:`parser_class <.ElectoralRoll.parser_class` \
-    and called through the :meth:`parse_sheet <.ElectoralRoll.parse_sheet>`
-    method. Each resulting object will be sent to the :meth:`serialize_sheet \
-    <.ElectoralRoll.serialize_sheet>` method that will store the result \
-    in the :attr:`storage <.ElectoralRoll.storage>` property, and then \
-    generate a partial export ( with the :meth:`export_sheet \
-    <.ElectoralRoll.export_sheet` method) if so specified.
+    :param str source: The source path of pdf files.
+    :param bool auto: Run the extract in the instantation.
+    :param bool recursive: Determines if the search for pdf files in the \
+        delivered source is recursive or is only for the root of the \
+        indicated directory,
+    :param str processor: Processor to use (default='pdftotext', see \
+        more in :class:`PDFProcessorMixin <.PDFProcessorMixin>`).
+    :param bool memorize: Storage data in memory of instance (default=True, \
+        see more in :class:`RollMemorizer <.RollMemorizer>`).
+    :param bool export: If export data in csv file (default=False, \
+        see more in :class:`RollExporter <.RollExporter>`).
+    :param str output: Directory to store the data in csv file(s) (\
+        see more in :class:`RollExporter <.RollExporter>`).
+    :param str mode: Determines the data export mode in files. If it \
+        is *unified* (default) it creates a single csv file with the data,\
+         or if it is *separated* into several according to communal or \
+        regional criteria (see more in :class:`RollExporter <.RollExporter>`).
+    :param str mode_sep: Criteria for separating files in export in \
+        separate mode (*commune* or *region*, default="commune", \
+        see more in :class:`RollExporter <.RollExporter>`).
+    :param bool random_suffix: Determines whether exported files have a \
+        random text string appended to the end (see more in \
+        :class:`RollExporter <.RollExporter>`).
+    :param bool summary: Determines whether to generate a summary file of \
+        the export and the extracted data (see more in :class:`RollExporter \
+        <.RollExporter>`).
 
-    Setting the parameter "auto" to true in the constructor will \
-    automatically start the :meth:`run <.ElectoralRoll.run>` method.
+    Anyway, only the *source* parameter is required:
 
-    >>> obj = ElectoralRoll(
-        source='/path/to/the/pdf/file(s)',
-        verbose=True,
-        auto=True)
+    >>> obj = ElectoralRoll(source='/path/to/the/pdf/file(s')
+    >>> obj.run()  # Start the analysis and extraction of data.
+
+    Setting the parameter *auto* to true in the constructor will \
+    automatically start the :meth:`run <.ElectoralRoll.run>` method:
+
+    >>> obj = ElectoralRoll(source='/path/to/the/pdf/file(s', auto=True)
+
+    See the :meth:`run <.ElectoralRoll.run>` at that method for a better \
+    understanding of this class.
     '''
-    parser_class = SheetRollParser
-    adapter_class = RollAdapter
-    printer_class = RollPrinter
-    memorizer_class = RollMemorizer
-    exporter_class = RollExporter
+
+    inner_class_parser = RollParser
+    inner_class_adapter = RollAdapter
+    inner_class_printer = RollPrinter
+    inner_class_memorizer = RollMemorizer
+    inner_class_exporter = RollExporter
 
     # Operational methods
     # --------------------
     def run(self):
         '''
-        Method that starts the analysis of the pdf files loaded in the \
-        :attr:`sheets <.ElectoralRoll.sheets>` property. Iterate in each \
-        one of them by running the :meth:`parse_sheet \
-        <.ElectoralRoll.parse_sheet>` and :meth:`serializer_sheet \
-        <.ElectoralRoll.serializer_sheet>` methods.
+        :meth:`ElectoralRoll.run <.ElectoralRoll.run>` is the main method \
+        within the class logic that executes the complete flow of data \
+        analysis and extraction:
 
-        Record in the :attr:`metadata <.ElectoralRoll.metadata>` property \
-        in the *analysis* key the duration of the parsing and serialization, \
-        as well as when it started and ended.
+        * Iterate over the found files, ordered by size from smallest \
+        to largest, executing the :meth:`run_file <.ElectoralRoll.run_file>` \
+        method with the file, its index and the total.
+        * It iterates on each page of each file:
+            * *Processing* it with the library determined in the processor \
+            property and defined in the constructor (see more in \
+            :class:`PDFProcessorMixin <.PDFProcessorMixin>`).
+            * *Adapting* the rendered page if required by the application \
+            and the processor used (see more in :class:`RollAdapter \
+            <.RollAdapter>`).
+            * *Analyzing* the content text to extract its data (see more \
+            in :class:`RollParser <.RollParser>`).
+            * *Memorizing* your data in a consolidated data stored in the \
+            memorizer. Its execution can be skipped by setting the \
+            *memorizer* parameter to false in the constructor (see more \
+            in :class:`RollMemorizer <.RollMemorizer>`).
+            * *Exporting* your data to one or more csv files depending on \
+            how the exporter is configured. Its execution can be activated \
+            by defining the *export* parameter as true in the constructor \
+            (see more in :class:`RollExporter <RollExporter>`).
+        * The printer (:class:`RollPrinter <.RollPrinter>` instance) is \
+        executed in each part of the flow and it determines if and how it \
+        prints on the screen (as declared in the constructor).
 
-        >>> obj.run()
+        >>> roll.run()
         '''
         started = dt.now()
         self._metadata['analysis']['started'] = started
@@ -90,11 +133,38 @@ class ElectoralRoll(PDFProcessorMixin):
         summary = self.exporter.export_summary(self.rid, self.metadata)
         if summary:
             self._metadata['exported_to'].append(summary)
-        self._runned = True
+        self._is_runned = True
         self.printer.run_finalized(finalized, self.metadata)
 
     def run_file(self, file, file_num, file_total):
         '''
+        :param dict file: data of file
+        :param int file_num: the number of file to analize.
+        :param int file_total: the total of files to analize.
+            this param and before is needed for printer.
+
+        The :meth:`run_file <.ElectoralRoll.run_file>` method is called by \
+        the :meth:`run <.ElectoralRoll.run>` method and iterates on each page \
+        of each file:
+
+            * *Processing* it with the library determined in the processor \
+            property and defined in the constructor (see more in \
+            :class:`PDFProcessorMixin <.PDFProcessorMixin>`).
+            * *Adapting* the rendered page if required by the application \
+            and the processor used (see more in :class:`RollAdapter \
+            <.RollAdapter>`).
+            * *Analyzing* the content text to extract its data (see more \
+            in :class:`RollParser <.RollParser>`).
+            * *Memorizing* your data in a consolidated data stored in the \
+            memorizer. Its execution can be skipped by setting the \
+            *memorizer* parameter to false in the constructor (see more \
+            in :class:`RollMemorizer <.RollMemorizer>`).
+            * *Exporting* your data to one or more csv files depending on \
+            how the exporter is configured. Its execution can be activated \
+            by defining the *export* parameter as true in the constructor \
+            (see more in :class:`RollExporter <RollExporter>`).
+
+        Stores metadatas of the extraction of each file.
         '''
 
         def get_progress(self, rid, files, sheets):
@@ -150,17 +220,17 @@ class ElectoralRoll(PDFProcessorMixin):
                 self, file['name'], 'processing', 'process_pdf_page', [sheet])
             # adapting
             adapted = duration_wrapper(
-                self, file['name'], 'adapting', 'adapter_class',
+                self, file['name'], 'adapting', 'inner_class_adapter',
                 [processed, self.processor]).sheet
             # parsingd
             parsed = duration_wrapper(
-                self, file['name'], 'parsing', 'parse_sheet', [adapted])
+                self, file['name'], 'parsing', 'sheet_parse', [adapted])
             # memorizing
             duration_wrapper(self, file['name'], 'memorizing',
-                             'memorize_sheet', [parsed])
+                             'sheet_memorize', [parsed])
             # exporting
             exported = duration_wrapper(
-                self, file['name'], 'exporting', 'export_sheet', [parsed])
+                self, file['name'], 'exporting', 'sheet_export', [parsed])
             if exported:
                 if 'exported_to' not in self.metadata:
                     self._metadata['exported_to'] = []
@@ -173,40 +243,141 @@ class ElectoralRoll(PDFProcessorMixin):
         self._metadata['files'][file['name']].update(file_metadata)
         self.printer.run_file_end(file_metadata)
 
-    def parse_sheet(self, sheet):
+    def sheet_parse(self, sheet, *args, **kwargs):
         '''
-        Method that calls the class defined in the :attr:`parser_class \
-        <.ElectoralRoll.parser_class>` class attribute, initializing it \
+        :param str sheet: sheet in string.
+        :return: instance of :class:`RollParser <.RollParser>`.
+
+        Method that calls the class defined in the :attr:`inner_class_parser \
+        <.ElectoralRoll.inner_class_parser>` class attribute, initializing it \
         with the sheet argument.
         '''
-        return self.parser_class(sheet)
+        return self.inner_class_parser(sheet, *args, **kwargs)
 
-    def memorize_sheet(self, parsed):
+    def sheet_memorize(self, parsed, *args, **kwargs):
         '''
-        '''
-        return self.memorizer.memorize(parsed)
+        :param str parsed: instance of :class:`RollParser <.RollParser>`.
 
-    def export_sheet(self, parsed):
+        Method that routes a parsed page to the :meth:`memorize \
+        <.RollMemorizer.memorize>` method of the memorizer.
         '''
+        return self.memorizer.memorize(parsed, *args, **kwargs)
+
+    def sheet_export(self, parsed, *args, **kwargs):
         '''
-        return self.exporter.export_sheet(parsed)
+        :param str parsed: instance of :class:`RollParser <.RollParser>`.
+        :return: Absolute path of the csv file where the data was exported.
+
+        Method that routes a parsed page to the :meth:`export_sheet \
+        <.RollExporter.export_sheet>` method of the exporter.
+        '''
+        return self.exporter.export_sheet(parsed, *args, **kwargs)
+
+    @property
+    def printer(self):
+        '''
+        :return: inner instance of :class:`RollPrinter <.RollPrinter>`.
+
+        Property to call the :class:`RollPrinter <.RollPrinter>` object \
+        instanciated in constructor.
+
+        >>> roll.printer.__class__
+        serveliza.roll.printer.RollPrinter
+        '''
+        return self._printer
+
+    @property
+    def memorizer(self):
+        '''
+        :return: inner instance of :class:`RollMemorizer <.RollMemorizer>`.
+
+        Property to call the :class:`RollMemorizer <.RollMemorizer>` object \
+        instanciated in constructor.
+
+        >>> roll.memorizer.__class__
+        serveliza.roll.memorizer.RollMemorizer
+        '''
+        return self._memorizer
+
+    @property
+    def exporter(self):
+        '''
+        :return: inner instance of :class:`RollExporter <.RollExporter>`.
+
+        Property to call the :class:`RollExporter <.RollExporter>` object \
+        instanciated in constructor.
+
+        >>> roll.exporter.__class__
+        serveliza.roll.exporter.RollExporter
+        '''
+        return self._exporter
 
     # Operational properties
     # -----------------------
     @property
-    def runned(self):
+    def is_runned(self):
         '''
+        :return: boolean.
+
         Boolean property that indicates whether the instance has executed the \
         :meth:`run <.ElectoralRoll.run>` method or not.
+
+        >>> roll.is_runned
+        True  # or False
         '''
-        return self._runned
+        return self._is_runned
 
     @property
     def metadata(self):
         '''
+        :return: dictionary with all metadata.
+
         Property that stores the analysis metadata.
         It integrates the metadata of each electoral register detected \
         in the analysis.
+
+        >>> roll.is_runned
+        False
+        >>> roll.metadata
+        {'files': {'filename.pdf': {'name': 'filename.pdf',
+           'bytes': 10000,
+           'relative': 'relative/path/filename.pdf',
+           'absolute': '/absolute/path/filename.pdf',
+           'mtime': datetime.datetime(...),
+           'atime': datetime.datetime(...),
+           'durations': {'processing': datetime.timedelta(0),
+            'adapting': datetime.timedelta(0),
+            'parsing': datetime.timedelta(0),
+            'memorizing': datetime.timedelta(0),
+            'exporting': datetime.timedelta(0)}}},
+         'analysis': {'started': None,
+          'finalized': None,
+          'durations': {'processing': datetime.timedelta(0),
+           'adapting': datetime.timedelta(0),
+           'parsing': datetime.timedelta(0),
+           'memorizing': datetime.timedelta(0),
+           'exporting': datetime.timedelta(0)}},
+         'rolls': {}}
+        >>> roll.run()
+        >>> roll.metadata
+        {'files': {'filename.pdf': {'name': 'filename.pdf',
+           ...
+           'rid': 'RID-XXXX',
+           'roll': 'PADRON ELECTORAL X - ELECCIONES X XXXX',
+           'year': XXXX,
+           'region': 'REGION',
+           'province': 'PROVINCE',
+           'commune': 'COMMUNE',
+           'entries': {'total': 999, 'rescue': 0, 'errors': 0},
+           'duration': datetime.timedelta(...)}},
+         'analysis': {'started': datetime.datetime(...) ...},
+         'rolls': {'RID-XXXX: {'roll': 'PADRON ELECTORAL X - ELE...',
+           'year': XXXX,
+           'regions': ['REGION', ...],
+           'communes': ['COMMUNE', ...],
+           'provinces': ['PROVINCE', ...],
+           'nulls': {'total': 0},
+           'entries': {'total': 999, 'rescue': 0, 'errors': 0}}}}
         '''
         stored = {'rolls': {}}
         for k, v in self.memorizer.storage.items():
@@ -215,35 +386,138 @@ class ElectoralRoll(PDFProcessorMixin):
         return {**self._metadata, **stored}
 
     @property
-    def printer(self):
+    def rid(self):
         '''
-        Property to call the RollPrinter object instanciated in constructor.
+        :return: string with first roll identifier.
+
+        Property that returns the identifier of the electoral roll analyzed.
+        If it will return only the first identifier detected, this should \
+        not cause inconvenience unless pdf files from different electoral \
+        rolls are loaded.
+
+        >>> roll.rid
+        'RID-XXXX'
+
+        If the instance did not run, it returns None.
         '''
-        return self._printer
+        if self.memorizer.storage:
+            rids = [x for x in self.memorizer.storage]
+            return rids[0]
 
     @property
-    def memorizer(self):
+    def roll(self):
         '''
+        :return: name of electoral roll.
+
+        Property that returns the full name of electoral roll analyzed.
+
+        >>> roll.roll
+        'PADRON ELECTORAL X - ELECCIONES X XXXX'
+
+        Internaly use the :attr:`rid <.ElectoralRoll.rid>` property. If the \
+        instance did not run, it returns None.
         '''
-        return self._memorizer
+        if self.memorizer.storage:
+            return self.memorizer.storage[self.rid]['metadata']['roll']
 
     @property
-    def exporter(self):
-        return self._exporter
+    def entries(self):
+        '''
+        :return: list of data entries of memorizer.
+
+        Property that accesses the data entries of the electoral roll \
+        analyzed. The data is stored in the :class:`RollMemorizer \
+        <.RollMemorizer>` instance.
+
+        >>> roll.entries
+        [[...]...]
+
+        Internaly use the :attr:`rid <.ElectoralRoll.rid>` property. If the \
+        instance did not run, it returns None.
+        '''
+        storage = self.memorizer.storage
+        if storage and 'entries' in storage[self.rid]:
+            return self.memorizer.storage[self.rid]['entries']
+
+    @property
+    def fields(self):
+        '''
+        :return: list of fields of electoral roll.
+
+        Property that returns the fields of the electoral roll analyzed.
+
+        >>> roll.fields
+        ['nombre',
+         'c-identidad',
+         'sex',
+         'region',
+         'provincia',
+         'comuna',
+         'domicilio-electoral',
+         'circunscripcion',
+         'mesa',
+         'reference']
+
+        Internaly use the :attr:`rid <.ElectoralRoll.rid>` property. If the \
+        instance did not run, it returns None.
+        '''
+        storage = self.memorizer.storage
+        if storage and 'fields' in storage[self.rid]:
+            return self.memorizer.storage[self.rid]['fields']
+
+    @property
+    def errors(self):
+        '''
+        :return: list of errors found.
+
+        Property that stores the errors of the analysis. List of errors \
+        found in the analysis. Errors are dictionaries with data to keep \
+        track of. The purpose of registering them is to improve the \
+        development of serveliza.
+
+        >>> roll.errors
+        [...]
+        '''
+        return self.memorizer.errors
+
 
     @property
     def to_dataframe(self):
         '''
+        :return: Pandas DataFrame instance.
+        :raises UserWarning: You need to run the application before \
+            converting the result to Pandas DataFrame.
+
+        Property that returns the electoral roll data in a new Pandas \
+        `DataFrame`_ instance.
+
+        .. _DataFrame: https://pandas.pydata.org/pandas-docs/stable/\
+            reference/api/pandas.DataFrame.html
         '''
-        if not self.runned:
+        if not self.is_runned:
             raise UserWarning('You need to run the application before '
-                              'converting the result to pandas dataframe.')
+                              'converting the result to Pandas DataFrame.')
         return pd.DataFrame(np.array(self.entries), columns=self.fields)
 
     @property
     def source(self):
         '''
-        Directory(ies) or file(s) to search for valid electoral rolls.
+        :return: list of paths to valid pdf files.
+        :raises TypeError: source param must be string or list.
+        :raises TypeError: source doesnt have valid PDF files.
+
+        Property that stores paths of pdf files obtained from a list or \
+        string with file paths or directories.
+
+        >>> roll.source
+        ['relative / path / to / file.pdf']
+
+        The source is loaded into the constructor through the parameter \
+        of the same name. It is also possible to redefine through the \
+        property setter:
+
+        >>> roll.source = ['path / to / file.pdf', '/ path / to / dir']
+        >>> roll.source = '/path/to/dir/o/file.pdf'
         '''
         return self._source
 
@@ -281,58 +555,14 @@ class ElectoralRoll(PDFProcessorMixin):
         '''
         return self._recursive
 
-    # Shortcut properties
-    @property
-    def rid(self):
-        '''
-        Property that returns the identifier of the electoral roll analyzed.
-        If it will return only the first identifier detected, this should \
-        not cause inconvenience unless pdf files from different electoral \
-        rolls are loaded.
-        '''
-        if self.memorizer.storage:
-            rids = [x for x in self.memorizer.storage]
-            return rids[0]
-
-    @property
-    def roll(self):
-        '''
-        '''
-        if self.memorizer.storage:
-            return self.memorizer.storage[self.rid]['metadata']['roll']
-
-    @property
-    def entries(self):
-        '''
-        Property that accesses the data entries of the electoral roll analyzed.
-        '''
-        storage = self.memorizer.storage
-        if storage and 'entries' in storage[self.rid]:
-            return self.memorizer.storage[self.rid]['entries']
-
-    @property
-    def fields(self):
-        '''Property that returns the fields of the electoral roll analyzed.'''
-        storage = self.memorizer.storage
-        if storage and 'fields' in storage[self.rid]:
-            return self.memorizer.storage[self.rid]['fields']
-
-    @property
-    def errors(self):
-        '''Property that stores the errors of the analysis.'''
-        return self.memorizer.errors
-
-    # Constructor
-    # ------------
     def __init__(self, source, auto=False, *args, **kwargs):
-        # starting properties
         processor = kwargs.get('processor', self.processor)
         self.processor = processor
-        self._printer = self.printer_class(**kwargs)  # load printer
-        self._memorizer = self.memorizer_class(**kwargs)  # load memorizer
-        self._exporter = self.exporter_class(**kwargs)  # load exporter
+        self._printer = self.inner_class_printer(**kwargs)
+        self._memorizer = self.inner_class_memorizer(**kwargs)
+        self._exporter = self.inner_class_exporter(**kwargs)
         self._metadata = {'files': {}}
-        self._runned = False
+        self._is_runned = False
         self._recursive = bool(kwargs.get('recursive', False))
         self._source = []
         self.source = source

@@ -8,9 +8,10 @@ from datetime import datetime as dt
 from slugify import slugify
 
 
-class SheetRollParser:
+class RollParser:
     '''
-    Parser is intended to be instantiated by each sheet.
+    :class:`RollParser <.RollParser>` is intended to be instantiated \
+    by each sheet.
 
     Class attributes beginning with "*regex_*" correspond to the regular \
     expressions used to detect fields in the header. The *regexs_entries* \
@@ -19,149 +20,39 @@ class SheetRollParser:
     *dpa_fixture_path* class attribute defines the path of the .json file \
     that contains a compressed dictionary with communes and constituencies.
     '''
-
-    regex_begin = r'^REPUBLICA\s+DE\s+CHILE'
+    # regex_begin = r'^REPUBLICA\s+DE\s+CHILE'
+    #: roll name regex
     regex_roll = r'PADRO?Ó?N\s+ELECTORAL\s+[A-Z,\s-]+\d+'
+    #: region regex
     regex_region = r'REGIO?Ó?N[0,]*\s*:\s*([A-ZÑ\'\s.]*\s{3})'
+    #: commune regex
     regex_commune = r'COMUNA[0,]*\s*:\s*([A-ZÑ\' ]*\s{3})'
+    #: province regex
     regex_province = r'PROVINCIA[0,]*\s*:\s*([A-ZÑ\' ]*)'
-    # optionals
+    #: total entries regex (optional)
     regex_total_entries = r'Registros\s*:\s*(\d+)'
+    #: pagination regex (optional)
     regex_pagination = r'[PAaáGgIiNn]+\s*:?\s*(\d*)\s*de\s*(\d*)'
+    #: regex's for parsing entries.
     regexs_entries = {
         'name': r'^[A-ZÑa-z\s]+',
         'rut': r'\d*\.?\d+\.\d+-[0-9kK]',
         'sex': r'\s(VAR|MUJ)[ONER]*\s',
         'table': r'\s(\d+\s?\w?)\s*\d*$'}
-
+    #: path to commune-circuns json.
     dpa_fixture_path = '../utils/fixtures/'\
         'DPA-commune-circuns.json'
 
-    # Properties
-    # -----------
-    #
-    @property
-    def sheet(self):
-        '''
-        Property that contains a text string of the entire sheet to parse or \
-        the list of text lines if it is decomposed.
-
-        >>> parser.sheet
-        '...' | ['...', '...']
-        '''
-        return self._sheet
-
-    @property
-    def decomposed(self):
-        '''
-        Property that indicates whether the '*sheet*' property is decomposed \
-        into a list of lines or not.
-        '''
-        return isinstance(self.sheet, list)
-
-    @property
-    def header(self):
-        '''
-        Property that contains the result of method :meth:`parse_header \
-        <.SheetRollParser.parse_header>`. It consists of a \
-        dictionary with the data from the header of the electoral roll sheet.
-
-        >>> parser.header
-        {
-            'roll': 'PADRON...',
-            'election': 'ELECCION...',
-            'year':     2020,
-            'region':   'METRO...',
-            'commune':  'SANTIA...',
-            'province': 'SANTIA...',
-        }
-        '''
-        return self._header
-
-    @property
-    def fields(self):
-        '''
-        Property that contains the fields of the electoral roll \
-        detected in the sheet through the :meth:`parse_fields \
-        <.SheetRollParser.parse_fields` method.
-        '''
-        return self._fields
-
-    @property
-    def entries(self):
-        '''
-        Property containing a list of entries from the electoral roll \
-        sheet. Each entry corresponds to a list of data in the order of the \
-        fields defined in the :attr:`fields <SheetRollParser.fields>` \
-        property.
-        '''
-        return self._entries
-
-    @property
-    def metadata(self):
-        '''
-        Property contains the metadata extracted during the parser analysis \
-        of the electoral roll sheet.
-        The metadata is stored as a dictionary, the \'*rid*\' key \
-        corresponding to the unique identifier of the voter registry of the \
-        sheet, the \'*times*\' key stores how long the analysis took (in \
-        total, during header, fields and entries), the \'*entries*\' key \
-        contains the total number of entries extracted , the amount of \
-        rescued and errors. Finally, the NULLS key contains the total \
-        number of null data inside each row or entry, as well as the detail \
-        of the fields, if there is any.
-
-        >>> parser.metadata
-        {
-            'rid': 'PEA-EM-2016',
-            'entries': {'total': 1, 'rescue': 0, 'errors': 0},
-            'nulls': {'total': 0}
-        }
-        '''
-        return self._metadata
-
-    @property
-    def errors(self):
-        '''
-        Property contains a list with the errors found in the sheet analysis. \
-        Each error corresponds to a dictionary with at least two keys: \
-        \'*code*\' with a semantic slug text of the error and '*target*' that \
-        contains what generated the error.
-        '''
-        return self._errors
-
-    @property
-    def fields_index(self):
-        '''
-        Property that contains the index where the fields are located in the \
-        decomposed sheet as a list.
-        '''
-        return self._fields_index
-
-    @property
-    def circuns(self):
-        '''
-        Property that contains the possible electoral circunscriptions \
-        within the commune defined in the :attr:`header \
-        <.SheetRollParser.header>` property. It will return None if \
-        the :meth:`parse_header <.SheetRollParser.parse_header>` \
-        method has not been executed.
-        '''
-        return self._circuns
-
-    @property
-    def more_fields(self):
-        return self._more_fields
-
     def run(self):
         '''
-        Method that starts the voter registry sheet analyzer by executing \
-        methods :meth:`decompose <.SheetRollParser.decompose>`, \
-        :meth:`parse_header <.SheetRollParser.parse_header>` and \
-        :meth:`parse_fields <.SheetRollParser.parse_fields>` sequentially.
+        Method that starts the voter registry sheet analyzer by executing:
+        * :meth:`decompose <.RollParser.decompose>`
+        * :meth:`parse_header <.RollParser.parse_header>`
+        * :meth:`parse_fields <.RollParser.parse_fields>`
+        * :meth:`parse_entries <.RollParser.parse_entries>`
 
         It measures the duration times of each method executed and saves \
-        them in the :attr:`metadata[times] <.SheetRollParser.metadata>` \
+        them in the :attr:`metadata[times] <.RollParser.metadata>` \
         property.
         '''
         self.decompose()
@@ -183,21 +74,47 @@ class SheetRollParser:
 
     def decompose(self):
         '''
-        Method that descompose a :attr:`sheet <.SheetRollParser.sheet>` \
+        Method that descompose a :attr:`sheet <.RollParser.sheet>` \
         of the electoral roll in a text string into a list with each line.
         '''
-        if not self.decomposed:
+        if not self.is_decomposed:
             self._sheet = self._sheet.split('\n')
+
+    @property
+    def is_decomposed(self):
+        '''
+        :return: boolean.
+
+        Property that indicates whether the '*sheet*' property is decomposed \
+        into a list of lines or not.
+        '''
+        return isinstance(self.sheet, list)
+
+    @property
+    def sheet(self):
+        '''
+        Property that contains a text string of the entire sheet to parse or \
+        the list of text lines if it is decomposed.
+
+        >>> parser.is_descomposed
+        False
+        >>> parser.sheet
+        'text-\\n-string'
+        >>> parser.descompose
+        >>> parser.sheet
+        ['text-', '-string']
+        '''
+        return self._sheet
 
     def parse_header(self):
         '''
         Method that parses the head of the sheet and extracts the data \
         from *roll*, *election*, *year*, *region*, *province* and \
         *commune* to store it in the :attr:`header \
-        <.SheetRollParser.header>` property.
+        <.RollParser.header>` property.
 
         It also builds a unique identifier of the electoral roll that \
-        it stores in the :attr:`metadata <.SheetRollParser.metadata>` \
+        it stores in the :attr:`metadata <.RollParser.metadata>` \
         property with the *rid* key.
         '''
         def __identify(header):
@@ -237,6 +154,25 @@ class SheetRollParser:
                 'fixture': self.dpa_fixture_path,
                 'target': header['commune']})
 
+    @property
+    def header(self):
+        '''
+        Property that contains the result of method :meth:`parse_header \
+        <.SheetRollParser.parse_header>`. It consists of a \
+        dictionary with the data from the header of the electoral roll sheet.
+
+        >>> parser.header
+        {
+            'roll': 'PADRON...',
+            'election': 'ELECCION...',
+            'year':     2020,
+            'region':   'METRO...',
+            'commune':  'SANTIA...',
+            'province': 'SANTIA...',
+        }
+        '''
+        return self._header
+
     def parse_fields(self):
         '''
         Method to analyze and extract the fields of the electoral roll. \
@@ -244,7 +180,7 @@ class SheetRollParser:
         *domicilio-electoral*, *circunscripcion* y *mesa*) are taken and \
         commune, province and region (*comuna*, *provincia*, *region*) are \
         added. Result is stored in the :attr:`fields \
-        <SheetRollParser.fields>` property, the method returns nothing.
+        <.RollParser.fields>` property, the method returns nothing.
         '''
         index = self.__get_fields_index()
         if not index:
@@ -261,6 +197,15 @@ class SheetRollParser:
             self._fields.insert(3, 'region')
             self._fields.append('reference')
 
+    @property
+    def fields(self):
+        '''
+        Property that contains the fields of the electoral roll \
+        detected in the sheet through the :meth:`parse_fields \
+        <.RollParser.parse_fields>` method.
+        '''
+        return self._fields
+
     def parse_entries(self):
         '''
         Method that analyzes and extracts each data entry from the voter \
@@ -270,14 +215,14 @@ class SheetRollParser:
         it begins with at least one letter and ends with a number or a space \
         next to a single letter. Then each line of text is analyzed as if it \
         were an input through the :meth:`parse_entry \
-        <.SheetRollParser.parse_entry>` method.
+        <.RollParser.parse_entry>` method.
 
         Afterwards, the lines considered malformed are internally processed, \
         joining them in relation to whether they start with a letter or a \
         space. Then use the :meth:`parse_entry \
-        <.SheetRollParser.parse_entry>` method again for each of them. \
+        <.RollParser.parse_entry>` method again for each of them. \
         Those that are rescued will remain in the :attr:`metadata \
-        <.SheetRollParser.metadata>` property in the keys *entires* > \
+        <.RollParser.metadata>` property in the keys *entires* > \
         *rescue*.
         '''
         index = self.__get_fields_index() + 1
@@ -311,8 +256,8 @@ class SheetRollParser:
         line format.
 
         Finds the fields found by regular expressions that are stored in the \
-        class attribute: attr: `regexs_entries \
-        <.SheetRollParser.regexs_entries>`.
+        class attribute: :attr: `regexs_entries \
+        <.RollParser.regexs_entries>`.
 
         Then it looks for the district from a list according to its commune \
         and in relation to this it determines the place of the electoral \
@@ -450,8 +395,83 @@ class SheetRollParser:
             return None
         return re.sub(r'\s+', ' ', parsed[0].strip())
 
+    @property
+    def entries(self):
+        '''
+        Property containing a list of entries from the electoral roll \
+        sheet. Each entry corresponds to a list of data in the order of the \
+        fields defined in the :attr:`fields <RollParser.fields>` \
+        property.
+        '''
+        return self._entries
+
+    @property
+    def metadata(self):
+        '''
+        Property contains the metadata extracted during the parser analysis \
+        of the electoral roll sheet.
+
+        The metadata is stored as a dictionary, the *rid* key \
+        corresponding to the unique identifier of the voter registry of the \
+        sheet, the *times* key stores how long the analysis took (in \
+        total, during header, fields and entries), the *entries* key \
+        contains the total number of entries extracted , the amount of \
+        rescued and errors. Finally, the NULLS key contains the total \
+        number of null data inside each row or entry, as well as the detail \
+        of the fields, if there is any.
+
+        >>> parser.metadata
+        {
+            'rid': 'PEA-EM-2016',
+            'entries': {'total': 1, 'rescue': 0, 'errors': 0},
+            'nulls': {'total': 0}
+        }
+        '''
+        return self._metadata
+
+    @property
+    def errors(self):
+        '''
+        Property contains a list with the errors found in the sheet analysis. \
+        Each error corresponds to a dictionary with at least two keys: \
+        *code* with a semantic slug text of the error and '*target*' that \
+        contains what generated the error.
+        '''
+        return self._errors
+
+    @property
+    def fields_index(self):
+        '''
+        Property that contains the index where the fields are located in the \
+        decomposed sheet as a list.
+        '''
+        return self._fields_index
+
+    @property
+    def circuns(self):
+        '''
+        :return: a dictionary with communes as key and list of \
+            circunscriptions as value.
+
+        Property that contains the possible electoral circunscriptions \
+        within the commune defined in the :attr:`header \
+        <.RollParser.header>` property. It will return None if \
+        the :meth:`parse_header <.RollParser.parse_header>` \
+        method has not been executed.
+        '''
+        return self._circuns
+
+    @property
+    def more_fields(self):
+        '''
+        :return: boolean.
+
+        Property where the option of whether to add fields to the \
+        input is stored.
+        '''
+        return self._more_fields
+
     def __launch_props(self):
-        self._decomposed = False
         self._fields_index = None
         self._metadata = {}
         self._header = {}

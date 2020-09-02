@@ -207,8 +207,8 @@ class RollPrinter(ColorMixin):
 
     def repr(self, obj):
         msg = '<' + self.info(obj.__class__.__name__)
-        msg += ' instance ' + self.runned_tag(obj.runned)
-        if obj.runned:
+        msg += ' instance ' + self.is_runned_tag(obj.is_runned)
+        if obj.is_runned:
             entries = self.ok(
                 len(obj.entries)) if len(obj.entries) else '0'
             errors = self.error(
@@ -219,7 +219,7 @@ class RollPrinter(ColorMixin):
         msg += '>'
         return msg
 
-    def runned_tag(self, runned):
-        if runned:
-            return f"[{self.ok('runned')}]"
-        return f"[{self.warn('not runned')}]"
+    def is_runned_tag(self, is_runned):
+        if is_runned:
+            return f"[{self.ok('is_runned')}]"
+        return f"[{self.warn('not is_runned')}]"
