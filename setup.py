@@ -13,16 +13,16 @@ with open('HISTORY.rst') as history_file:
 with open('requirements.txt') as req_file:
     requirements = req_file.read()
 
-setup_requirements = [ ]
+setup_requirements = []
 
-test_requirements = [ ]
+test_requirements = []
 
 setup(
     author="chivke",
     author_email='chivke@pm.me',
     python_requires='>=3.6',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Natural Language :: English',
@@ -44,6 +44,7 @@ setup(
     keywords='serveliza',
     name='serveliza',
     packages=find_packages(include=['serveliza', 'serveliza.*']),
+    package_data={'': ['*.json']},
     # setup_requires=setup_requirements,
     test_suite='tests',
     # tests_require=test_requirements,
