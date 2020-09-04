@@ -40,8 +40,7 @@ class RollParser:
         'sex': r'\s(VAR|MUJ)[ONER]*\s',
         'table': r'\s(\d+\s?\w?)\s*\d*$'}
     #: path to commune-circuns json.
-    dpa_fixture_path = '../utils/fixtures/'\
-        'DPA-commune-circuns.json'
+    dpa_fixture_path = '../utils/DPA-commune-circuns.json'
 
     def run(self):
         '''
