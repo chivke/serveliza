@@ -52,17 +52,18 @@ def roll_parser(subparser):
         help=ElectoralRoll.source.__doc__)
     parser_roll.add_argument(
         '-o', '--output', help=RollExporter.output.__doc__,
-        nargs=1, type=str, metavar='output', default='output')
+        type=str, metavar='output', default='output')
+    processors = [x[0] for x in ElectoralRoll.processor_ref.items()]
     parser_roll.add_argument(
         '-p', '--processor', help=ElectoralRoll.processor.__doc__,
-        nargs=1, type=str, default='pdftotext',
-        choices=[x[0] for x in ElectoralRoll.processor_ref.items()])
+        type=str, default='pdftotext',
+        choices=processors)
     parser_roll.add_argument(
         '-m', '--mode', help=RollExporter.mode.__doc__,
-        nargs=1, type=str, default='unified', choices=RollExporter.modes)
+        type=str, default='unified', choices=RollExporter.modes)
     parser_roll.add_argument(
         '-s', '--separator', help=RollExporter.mode_sep.__doc__,
-        nargs=1, type=str, choices=RollExporter.mode_sep_opts)
+        type=str, choices=RollExporter.mode_sep_opts)
     parser_roll.add_argument(
         '-r', '--recursive', help=ElectoralRoll.recursive.__doc__,
         action='store_true', default=False)
