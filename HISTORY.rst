@@ -5,17 +5,20 @@ History
 0.1.7 (2020-10-13)
 ------------------
 
-* Fix cli bug and regex.
+* Fix cli and regex bugs.
+
 
 0.1.6 (2020-09-22)
 ------------------
 
 * Fix several bugs.
 
+
 0.1.5 (2020-09-05)
 ------------------
 
 * Fix issue in the cli interface.
+
 
 0.1.4 (2020-09-04)
 ------------------
