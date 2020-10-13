@@ -26,7 +26,7 @@ class RollParser:
     #: region regex
     regex_region = r'REGIO?Ó?N[0,]*\s*:\s*([A-ZÑ\'\s.]*\s{3})'
     #: commune regex
-    regex_commune = r'COMUNA[0,]*\s*:\s*([A-ZÑ\' ]*\s{3})'
+    regex_commune = r'COMUNA[0,]*\s*:\s*([A-ZÑ\' -]*\s{3})'
     #: province regex
     regex_province = r'PROVINCIA[0,]*\s*:\s*([A-ZÑ\' ]*)'
     #: total entries regex (optional)
