@@ -63,7 +63,7 @@ def roll_parser(subparser):
         type=str, default='unified', choices=RollExporter.modes)
     parser_roll.add_argument(
         '-s', '--separator', help=RollExporter.mode_sep.__doc__,
-        type=str, choices=RollExporter.mode_sep_opts)
+        type=str, default='region', choices=RollExporter.mode_sep_opts)
     parser_roll.add_argument(
         '-r', '--recursive', help=ElectoralRoll.recursive.__doc__,
         action='store_true', default=False)
