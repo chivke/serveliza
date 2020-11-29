@@ -27,6 +27,9 @@ Serveliza
         :target: https://www.gnu.org/licenses/gpl-3.0
         :alt: license badge
 
+.. image:: https://img.shields.io/pypi/dm/serveliza.svg
+        :target: https://pypi.python.org/pypi/serveliza
+        :alt: Downloads
 
 
 |Intro|
