@@ -4,12 +4,14 @@ Serveliza
 
 .. image:: https://img.shields.io/pypi/v/serveliza.svg
         :target: https://pypi.python.org/pypi/serveliza
+        :alt: pypi version
 
 .. image:: https://img.shields.io/pypi/pyversions/serveliza
         :alt: Python versions
 
 .. image:: https://img.shields.io/travis/chivke/serveliza.svg
         :target: https://travis-ci.com/chivke/serveliza
+        :alt: Build status
 
 .. image:: https://readthedocs.org/projects/serveliza/badge/?version=latest
         :target: https://serveliza.readthedocs.io/en/latest/?badge=latest
@@ -18,10 +20,6 @@ Serveliza
 .. image:: https://pyup.io/repos/github/chivke/serveliza/shield.svg
         :target: https://pyup.io/repos/github/chivke/serveliza/
         :alt: Updates
-
-.. image:: https://pyup.io/repos/github/chivke/serveliza/python-3-shield.svg
-        :target: https://pyup.io/repos/github/chivke/serveliza/
-        :alt: Python 3
 
 .. image:: https://img.shields.io/github/license/chivke/serveliza
         :target: https://www.gnu.org/licenses/gpl-3.0
