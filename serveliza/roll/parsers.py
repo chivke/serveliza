@@ -55,6 +55,8 @@ class RollParser:
         property.
         '''
         self.decompose()
+        if not self.__get_fields_index():
+            return None
         header_at = dt.now()
         self.parse_header()
         fields_at = dt.now()
@@ -224,9 +226,10 @@ class RollParser:
         <.RollParser.metadata>` property in the keys *entires* > \
         *rescue*.
         '''
-        index = self.__get_fields_index() + 1
+        index = self.__get_fields_index()
         if not index:
             return None
+        index += 1
         entries = []
         malformed = []
         for line in self.sheet[index:]:
