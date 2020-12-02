@@ -6,8 +6,6 @@ This section exposes the documentation of the classes and functions that support
 Electoral Roll
 --------------
 
-  |Roll|
-
 * Main module: :mod:`serveliza.roll.roll`
 * Auxiliary modules:
     * :mod:`serveliza.roll.adapters`

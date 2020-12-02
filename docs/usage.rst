@@ -7,8 +7,6 @@ Serveliza can be used in different ways.
 Command line usage
 ------------------
 
-|Intro|
-
 If you run from the command line you can access help on its use.
 
 .. code-block:: console
