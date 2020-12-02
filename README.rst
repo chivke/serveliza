@@ -9,10 +9,6 @@ Serveliza
 .. image:: https://img.shields.io/pypi/pyversions/serveliza
         :alt: Python versions
 
-.. image:: https://img.shields.io/travis/chivke/serveliza.svg
-        :target: https://travis-ci.com/chivke/serveliza
-        :alt: Build status
-
 .. image:: https://readthedocs.org/projects/serveliza/badge/?version=latest
         :target: https://serveliza.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
@@ -21,22 +17,26 @@ Serveliza
         :target: https://pyup.io/repos/github/chivke/serveliza/
         :alt: Updates
 
-.. image:: https://img.shields.io/github/license/chivke/serveliza
-        :target: https://www.gnu.org/licenses/gpl-3.0
-        :alt: license badge
-
-.. image:: https://img.shields.io/pypi/dm/serveliza.svg
+.. image:: https://img.shields.io/pypi/dd/serveliza
         :target: https://pypi.python.org/pypi/serveliza
         :alt: Downloads
 
+.. image:: https://img.shields.io/pypi/l/serveliza
+        :target: https://www.gnu.org/licenses/gpl-3.0
+        :alt: license badge
 
-|Intro|
+.. image:: https://img.shields.io/badge/donate-Paypal-orange
+        :target: https://www.paypal.com/donate?hosted_button_id=GBDQWR3M8J9DL
+        :alt: Donate
 
+`Serveliza`_ es una aplicación/librería que pretende facilitar la extracción de datos del Servicio Electoral chileno desde diferentes fuentes abiertas. Aún en primera fase de desarrollo, si puedes constribuye o realiza una donación.
 
-`Serveliza`_ is an application to extract data of the Chilean Electoral Service (SERVEL) from different open sources.
+`Serveliza`_ is an application/library to extract data of the Chilean Electoral Service (SERVEL) from different open sources.
 
-A first step to democratize data is to make it accessible for free use.
+Features
+--------
 
+* It analyzes, extracts and exports data from the **electoral roll**, having as a source the public pdf files distributed by SERVEL.
 
 Quick start
 ------------
@@ -46,14 +46,15 @@ Quick start
     $ pip install serveliza
     $ serveliza -h
 
-Features
---------
-
-* It analyzes, extracts and exports data from the **electoral roll**, having as a source the public pdf files distributed by SERVEL.
 
   |Roll|
 
-  *Added in the first release (0.1)*
+To do
+------
+
+* Deliver election results in pandas dataframe.
+* Report and debug extraction with electoral rolls 2013, 2016, 2020.
+
 
 `Documentation`_
 -----------------
@@ -73,15 +74,10 @@ License
 GNU General Public License v3
 
 
-.. |Intro| image:: https://github.com/chivke/serveliza/raw/master/images/serveliza_intro.gif
-    :align: middle
-    :alt: intro to cli
-    :width: 80%
-
 .. |Roll| image:: https://github.com/chivke/serveliza/raw/master/images/serveliza_roll.gif
     :align: middle
     :alt: Electoral roll example gif
-    :width: 80%
+    :width: 60%
 
 .. _Serveliza: https://github.com/chivke/serveliza/
 .. _Documentation: https://serveliza.readthedocs.io/
