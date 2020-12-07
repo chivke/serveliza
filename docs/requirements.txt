@@ -1,5 +1,5 @@
 # pdftotext==2.1.5
-pandas==1.1.4
+pandas==1.1.5
 python-slugify==4.0.1
 pdfminer.six==20201018
 pyyaml==5.3.1
