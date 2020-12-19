@@ -17,7 +17,7 @@ Serveliza
         :target: https://pyup.io/repos/github/chivke/serveliza/
         :alt: Updates
 
-.. image:: https://img.shields.io/pypi/dd/serveliza
+.. image:: https://img.shields.io/pypi/dm/serveliza
         :target: https://pypi.python.org/pypi/serveliza
         :alt: Downloads
 

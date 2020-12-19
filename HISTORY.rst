@@ -2,6 +2,19 @@
 History
 =======
 
+0.1.8 (2020-12-19)
+-----------------
+
+* Patch bug in parser.
+* Update README, HISTORY
+* Update Sphinx to 3.3.1
+* Update watchdog to  0.10.4
+* Update pandas to 1.1.4
+* Update pytest to 6.1.2
+* Update pdfminer.six to 20201018
+* Update pip to 20.2.4.
+
+
 0.1.7 (2020-10-13)
 ------------------
 
