@@ -1,4 +1,4 @@
-pdftotext==2.1.5
+pdftotext==2.2.2
 pandas==1.1.4
 python-slugify==4.0.1
 pdfminer.six==20201018
